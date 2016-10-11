@@ -1,27 +1,27 @@
 package com.rain.boss.perm.mapper;
 
 import com.rain.boss.annotation.MyBatisMapper;
-import com.rain.boss.perm.entity.User;
+import com.rain.boss.perm.entity.Role;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 @MyBatisMapper
-public interface UserMapper {
-    int add(User entity);
+public interface RoleMapper {
+    int add(Role entity);
 
-    int batchAdd(Collection<User> entitys);
+    int batchAdd(Collection<Role> entitys);
 
     int delete(String id);
 
     int deleteByIds(Collection<String> ids);
 
-    int update(User entity);
+    int update(Role entity);
 
-    User get(String id);
+    Role get(String id);
 
-    List<User> find(Map<String, ?> params);
+    List<Role> find(Map<String, ?> params);
 
     int count(Map<String, ?> params);
 
