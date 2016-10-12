@@ -147,7 +147,7 @@
 							<where>
 								<include refid="query_param"/>
 							</where>
-		<if test="page != null and page.order != null">order as o by ${page.order}</if>
+		<if test="page != null and page.order != null">order by ${page.order}</if>
 							<if test="page !=null and page.db == 'mysql'">
 								limit #{page.from},#{page.count}
 							</if>
