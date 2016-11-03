@@ -10,94 +10,132 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
-  <!-- 使用JNDI数据源 -->
-  <!--   <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="default" autowire="default"> <property name="jndiName">
-        <value>java:comp/env/jndi/egvm</value> </property> <property name="resourceRef"> <value>false</value> </property> </bean> -->
-  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-    <!-- <property name="driverClass" value="${c3p0.driverClass}"></property> <property name="jdbcUrl" value="${c3p0.url}"></property> <property
-        name="user" value="${c3p0.user}"></property> <property name="password" value="${c3p0.password}"></property> <property name="acquireIncrement"
-        value="${c3p0.acquireIncrement}"></property> <property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property> <property name="maxIdleTime"
-        value="${c3p0.maxIdleTime}"></property> <property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property> <property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
-        <property name="acquireRetryDelay" value="1000"></property> <property name="acquireRetryAttempts" value="60"></property> <property name="breakAfterAcquireFailure"
-        value="false"></property> -->
-  </bean>
-  <!-- 配置SqlSessionFactory -->
-  <!-- 该工厂类由Spring提供，里面封装了 创建session、关闭session、开启事务、 提交事务的方法。使用Spring整合MyBatis 之后，我们可以不必自己做这些事，Spring 会自动的做这些处理。这里也是整合思想 的体现。 -->
-  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="dataSource" ref="dataSource"/>
-    <!-- 创建容器时，Spring会根据此项配置 自动加载MyBatis的映射文件。 -->
-    <property name="mapperLocations" value="classpath*:com/rain/**/*Mapper.xml"/>
-    <!-- 自动扫描需要定义类别名的包，将包内的JAVA类的类名作为类别名 -->
-    <property name="typeAliasesPackage" value="com.rain.boss.perm.entity"/>
-  </bean>
-  <!-- 配置ECM平台Mapper -->
-  <!-- 配置MyBatis注解 -->
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <!-- 创建容器后，MapperScannerConfigurer会 自动扫描当前指定路径下的接口/类 -->
-    <property name="basePackage" value="com.rain"/>
-    <!-- MapperScannerConfigurer自动扫描带有 如下注解的接口/类 -->
-    <property name="annotationClass" value="com.rain.boss.annotation.MyBatisMapper"/>
-  </bean>
-  <!-- 开启IOC注解扫描 -->
-  <context:component-scan base-package="com.rain"/>
-  <!-- 开启MVC注解扫描 -->
-  <mvc:annotation-driven>
-    <mvc:message-converters>
-      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+    <!-- 使用JNDI数据源 -->
+    <!--   <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="default" autowire="default"> <property name="jndiName">
+          <value>java:comp/env/jndi/egvm</value> </property> <property name="resourceRef"> <value>false</value> </property> </bean> -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <!-- <property name="driverClass" value="${c3p0.driverClass}"></property> <property name="jdbcUrl" value="${c3p0.url}"></property> <property
+            name="user" value="${c3p0.user}"></property> <property name="password" value="${c3p0.password}"></property> <property name="acquireIncrement"
+            value="${c3p0.acquireIncrement}"></property> <property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property> <property name="maxIdleTime"
+            value="${c3p0.maxIdleTime}"></property> <property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property> <property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
+            <property name="acquireRetryDelay" value="1000"></property> <property name="acquireRetryAttempts" value="60"></property> <property name="breakAfterAcquireFailure"
+            value="false"></property> -->
+    </bean>
+
+    <!-- 配置SqlSessionFactory -->
+    <!-- 该工厂类由Spring提供，里面封装了 创建session、关闭session、开启事务、 提交事务的方法。使用Spring整合MyBatis 之后，我们可以不必自己做这些事，Spring 会自动的做这些处理。这里也是整合思想 的体现。 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 创建容器时，Spring会根据此项配置 自动加载MyBatis的映射文件。 -->
+        <property name="mapperLocations" value="classpath*:com/rain/**/*Mapper.xml"/>
+        <!-- 自动扫描需要定义类别名的包，将包内的JAVA类的类名作为类别名 -->
+        <property name="typeAliasesPackage" value="com.rain.boss.perm.entity"/>
+    </bean>
+
+    <!-- 配置ECM平台Mapper -->
+    <!-- 配置MyBatis注解 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 创建容器后，MapperScannerConfigurer会 自动扫描当前指定路径下的接口/类 -->
+        <property name="basePackage" value="com.rain"/>
+        <!-- MapperScannerConfigurer自动扫描带有 如下注解的接口/类 -->
+        <property name="annotationClass" value="com.rain.boss.annotation.MyBatisMapper"/>
+    </bean>
+
+    <!-- 开启IOC注解扫描 -->
+    <context:component-scan base-package="com.rain"/>
+
+    <!-- 对静态资源文件的访问 不支持访问WEB-INF目录 -->
+    <mvc:default-servlet-handler/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/frame/**" location="/frame/"/>
+    <mvc:resources mapping="/image/**" location="/images/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+
+    <!-- 开启MVC注解扫描 -->
+    <mvc:annotation-driven/>
+
+    <bean id="stringConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
         <property name="supportedMediaTypes">
-          <list>
-            <value> text/plain;charset=UTF-8</value>
-          </list>
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+            </list>
         </property>
-      </bean>
-    </mvc:message-converters>
-  </mvc:annotation-driven>
-  <!-- freemarker配置 -->
-  <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-    <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
-    <property name="defaultEncoding" value="UTF-8"/>
-  </bean>
-  <!-- freemarker视图解析器 -->
-  <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-    <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-    <property name="suffix" value=".ftl"/>
-    <property name="contentType" value="text/html;charset=UTF-8"/>
-    <property name="order" value="0"/>
-  </bean>
-  <!-- 拦截器 -->
-  <!-- <mvc:interceptors> 登录检查拦截器 <mvc:interceptor> <mvc:mapping path="/**" /> 页面 <mvc:exclude-mapping path="/login/toLogin.do" /> <mvc:exclude-mapping
-      path="/login/toRegister.do" /> <mvc:exclude-mapping path="/login/nopower.do" /> <mvc:exclude-mapping path="/login/toError.do" /> 功能 <mvc:exclude-mapping
-      path="/login/checkLogin.do" /> <mvc:exclude-mapping path="/login/validateCode.do" /> <mvc:exclude-mapping path="/login/isExist.do" /> <mvc:exclude-mapping
-      path="/login/register.do" /> 系统平台 <mvc:exclude-mapping path="/platform/**" /> <bean class="com.rain.platform.interceptor.CheckUserLoginInterceptor"
-      /> </mvc:interceptor> </mvc:interceptors> -->
-  <!-- 处理异常 -->
-  <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-    <property name="exceptionMappings">
-      <props>
-        <prop key="java.lang.Exception">platform/error</prop>
-      </props>
-    </property>
-  </bean>
-  <!-- 开启AOP注解扫描 -->
-  <aop:aspectj-autoproxy proxy-target-class="true"/>
-  <!-- 声明事务管理组件 -->
-  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource"/>
-  </bean>
-  <!-- XML配置声明事务范围及类型 -->
-  <tx:advice id="txAdvice" transaction-manager="transactionManager">
-    <tx:attributes>
-      <tx:method name="find*" read-only="true"/>
-      <tx:method name="get*" read-only="true"/>
-      <tx:method name="check*" read-only="true"/>
-      <tx:method name="count*" read-only="true"/>
-      <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
-      <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
-      <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
-      <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
-    </tx:attributes>
-  </tx:advice>
-  <aop:config proxy-target-class="true">
-    <aop:advisor advice-ref="txAdvice" pointcut="within(com.rain.*.*.biz.*)"/>
-  </aop:config>
+    </bean>
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringConverter"/>
+                <ref bean="jsonConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- spring mvc 视图：freemarker配置 -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!-- spring mvc 视图：freemarker视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="order" value="0"/>
+    </bean>
+
+    <mvc:interceptors>
+        <!--登录检查拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--页面-->
+            <!--<mvc:exclude-mapping path="/login/toLogin.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/toRegister.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/nopower.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/toError.do"/>-->
+            <!--功能-->
+            <!--<mvc:exclude-mapping path="/login/checkLogin.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/validateCode.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/isExist.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/register.do"/>-->
+            <!--系统平台-->
+            <mvc:exclude-mapping path="/boss/login"/>
+            <mvc:exclude-mapping path="/boss/perm/user"/>
+            <bean class="com.rain.boss.interceptor.CheckUserLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 处理异常 -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">platform/error</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 开启AOP注解扫描 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- 声明事务管理组件 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- XML配置声明事务范围及类型 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="check*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="txAdvice" pointcut="within(com.rain.*.*.biz.*)"/>
+    </aop:config>
 </beans>

@@ -84,9 +84,9 @@ public class RoleBizTest extends AbstractTestClass {
 
     @Test
     public void test8DeleteByIds() {
-        Set<String> roleIds = new HashSet<>();
-        globalEntitys.forEach(e -> roleIds.add(e.getId()));
-        Assert.assertEquals(roleIds.size(), biz.deleteByIds(roleIds));
+        Set<String> ids = new HashSet<>();
+        globalEntitys.forEach(e -> ids.add(e.getId()));
+        Assert.assertEquals(ids.size(), biz.deleteByIds(ids));
     }
 
     @Test

@@ -13,31 +13,32 @@ import com.rain.boss.perm.entity.User;
  */
 public class CheckUserLoginInterceptor implements HandlerInterceptor {
 
-	/*
-	 * 该方法在Controller业务方法前调用。 如果该方法返回true，则允许程序继续调用 Controller，否则不允许。
-	 */
-	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object obj) throws Exception {
-		User user = (User) request.getSession().getAttribute("");
-		if (user == null) {
-			response.sendRedirect(request.getContextPath()
-					+ "/login/toLogin.do");
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /*
+     * 该方法在Controller业务方法前调用。 如果该方法返回true，则允许程序继续调用 Controller，否则不允许。
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response, Object obj) throws Exception {
+        User user = (User) request.getSession().getAttribute("");
+        System.out.println("------------------------->checkLogin!" + Thread.currentThread());
+        if (user == null) {
+            response.sendRedirect(request.getContextPath()
+                    + "/boss/login");
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-	@Override
-	public void postHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-	}
+    @Override
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
+    }
 
-	@Override
-	public void afterCompletion(HttpServletRequest request,
-			HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-	}
+    @Override
+    public void afterCompletion(HttpServletRequest request,
+                                HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+    }
 }

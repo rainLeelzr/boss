@@ -127,7 +127,9 @@
         <where>
             <include refid="mainTable_queryParam"/>
         </where>
-        <if test="page != null and page.order != null">order by ${page.order}</if>
+        <if test="page != null and page.order != null">
+            order by ${page.order}
+        </if>
         <if test="page != null and page.db == 'mysql'">
             limit #{page.from}, #{page.count}
         </if>
@@ -175,7 +177,8 @@
 
     <!-- count -->
     <select id="count" parameterType="map" resultType="int">
-        select count(1)
+        select
+        count(1)
         from
         <include refid="mainTable_withAlias"/>
         <where>
@@ -184,7 +187,8 @@
     </select>
 
     <select id="countAll" resultType="int">
-        select count(1)
+        select
+        count(1)
         from
         <include refid="mainTable_noAlias"/>
     </select>

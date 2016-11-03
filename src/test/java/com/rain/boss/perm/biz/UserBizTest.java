@@ -89,14 +89,19 @@ public class UserBizTest extends AbstractTestClass {
 
     @Test
     public void test8DeleteByIds() {
-        Set<String> entityIds = new HashSet<>();
-        globalEntitys.forEach(e -> entityIds.add(e.getId()));
-        Assert.assertEquals(entityIds.size(), biz.deleteByIds(entityIds));
+        Set<String> ids = new HashSet<>();
+        globalEntitys.forEach(e -> ids.add(e.getId()));
+        Assert.assertEquals(ids.size(), biz.deleteByIds(ids));
     }
 
     @Test
     public void test9CountAll() {
         biz.countAll();
+    }
+
+    @Test
+    public void test10FindAll() {
+        biz.findAll();
     }
 
 }

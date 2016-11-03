@@ -1,204 +1,237 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rain.boss.perm.mapper.UserMapper">
-	<!-- 字段映射mapper -->
-	<resultMap id="userMap" type="User">
-		<!-- 用户角色 -->
-		<collection property="userRole" ofType="UserRole">
-			<id property="id" column="urId"/>
-			<result property="userId" column="urUserId"/>
-			<result property="roleId" column="urRoleId"/>
-		</collection>
-	</resultMap>
+    <!-- 字段映射mapper -->
+    <resultMap id="mainMap" type="User">
+        <!-- 用户角色 -->
+        <collection property="userRole" ofType="UserRole">
+            <id property="id" column="urId"/>
+            <result property="userId" column="urUserId"/>
+            <result property="roleId" column="urRoleId"/>
+        </collection>
+    </resultMap>
 
-	<!-- sql模板 -->
-	<!-- 表名 -->
-	<sql id="noAlias_table_user">boss_perm_user</sql>
-	<sql id="table_user"><include refid="noAlias_table_user"/> u</sql>
-	<!-- 字段名 -->
-	<sql id="noAlias_all_column">id, userAccount, userPwd, userName, gender, qq, telephone, mobilePhone, email, enabled, remark</sql>
-	<sql id="all_column">u.id, u.userAccount, u.userPwd, u.userName, u.gender, u.qq, u.telephone, u.mobilePhone, u.email, u.enabled, u.remark</sql>
-	<!-- 查询条件 -->
-	<sql id="query_param">
-		<if test='id != null'>and u.id = #{id}</if>
-		<if test="userAccount != null">and u.userAccount like concat('%', #{userAccount}, '%')</if>
-		<if test="userPwd != null">and u.userPwd like concat('%', #{userPwd}, '%')</if>
-		<if test="userName != null">and u.userName like concat('%', #{userName}, '%')</if>
-		<if test="gender != null">and u.gender like concat('%', #{gender}, '%')</if>
-		<if test="qq != null">and u.qq like concat('%', #{qq}, '%')</if>
-		<if test="telephone != null">and u.telephone like concat('%', #{telephone}, '%')</if>
-		<if test="mobilePhone != null">and u.mobilePhone like concat('%', #{mobilePhone}, '%')</if>
-		<if test="email != null">and u.email like concat('%', #{email}, '%')</if>
-		<if test="enabled != null">and u.enabled like concat('%', #{enabled}, '%')</if>
-		<if test="remark != null">and u.remark like concat('%', #{remark}, '%')</if>
-	</sql>
-	
-	<!-- 关联表（用户角色关联表） -->
-	<sql id="table_user_role">boss_perm_user_role ur</sql>
-	<!-- 关联表（用户角色关联表）字段名 -->
-	<sql id="all_column_user_role">, ur.id urId, ur.userId urUserId, ur.roleId urRoleId</sql>
-	<!-- 关联表（用户角色关联表）查询条件 -->
-	<sql id="query_param_user_role">
-		<if test='urId != null'>and ur.id = #{urId}</if>
-		<if test='urUserId != null'>and ur.userId = #{urUserId}</if>
-		<if test='urRoleId != null'>and ur.roleId = #{urRoleId}</if>
-	</sql>
-	
-	<!-- insert时的value部分 -->
-	<sql id="all_column_jdbcType">
-		#{id,jdbcType=VARCHAR} , 
-		#{userAccount,jdbcType=VARCHAR} , 
-		#{userPwd,jdbcType=VARCHAR} , 
-		#{userName,jdbcType=VARCHAR} , 
-		#{gender,jdbcType=TINYINT} ,
-		#{qq,jdbcType=VARCHAR} , 
-		#{telephone,jdbcType=VARCHAR} , 
-		#{mobilePhone,jdbcType=VARCHAR} , 
-		#{email,jdbcType=VARCHAR},
-		#{enabled,jdbcType=TINYINT},
-		#{remark,jdbcType=VARCHAR}
-	</sql>
-	
-	<!-- 批量insert时的value部分 -->
-	<sql id="all_column_jdbcType_foreach">
-		#{item.id,jdbcType=VARCHAR} , 
-		#{item.userAccount,jdbcType=VARCHAR} , 
-		#{item.userPwd,jdbcType=VARCHAR} , 
-		#{item.userName,jdbcType=VARCHAR} , 
-		#{item.gender,jdbcType=TINYINT} ,
-		#{item.qq,jdbcType=VARCHAR} , 
-		#{item.telephone,jdbcType=VARCHAR} , 
-		#{item.mobilePhone,jdbcType=VARCHAR} , 
-		#{item.email,jdbcType=VARCHAR},
-		#{item.enabled,jdbcType=TINYINT},
-		#{item.remark,jdbcType=VARCHAR}
-	</sql>
-	
-	<!-- update时的set部分 -->
-	<sql id="update_param">
-		<if test="userAccount != null">userAccount = #{userAccount},</if>
-		<if test="userPwd != null">userPwd = #{userPwd},</if>
-		<if test="userName != null">userName =#{userName},</if>
-		<if test="gender != null">gender =#{gender},</if>
-		<if test="qq != null">qq =#{qq},</if>
-		<if test="telephone != null">telephone =#{telephone},</if>
-		<if test="mobilePhone != null">mobilePhone =#{mobilePhone},</if>
-		<if test="email != null">email =#{email},</if>
-		<if test="enabled != null">enabled =#{enabled},</if>
-		<if test="remark != null">remark =#{remark}</if>
-	</sql>
-	
-	<!-- insert -->
-	<insert id="add" parameterType="User">
-		INSERT INTO 
-		<include refid="noAlias_table_user"/>
-		(<include refid="noAlias_all_column"/>)
-		VALUES
-		(<include refid="all_column_jdbcType"/>)
-	</insert>
-	
-	<insert id="batchAdd" parameterType="collection">
-		INSERT INTO 
-		<include refid="noAlias_table_user"/>
-		(<include refid="noAlias_all_column"/>)
-		VALUES
-		<foreach collection="collection" item="item" index="index" separator=",">
-			(<include refid="all_column_jdbcType_foreach"/>)
-		</foreach>
-	</insert>
-	
-	<!-- update -->
-	<update id="update" parameterType="User">
-		update <include refid="noAlias_table_user"/>
-		<set>
-			<include refid="update_param"/>
-		</set>
-		where id=#{id}
-	</update>
-	
-	<!-- delete -->
-	<delete id="delete" parameterType="string">
-		delete from <include refid="noAlias_table_user"/> where id = #{id}
-	</delete>
-	
-	<delete id="deleteByIds" parameterType="collection">
-		delete from <include refid="noAlias_table_user"/> where id in
-		<foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
-				#{item}
-		</foreach>
-	</delete>
-	
-	<!-- select -->
-	<select id="get" parameterType="string" resultType="User" >
-		select <include refid="all_column"/>
-		from <include refid="table_user"/> 
-		where id=#{id}
-	</select>
-	
-	<select id="find" parameterType="map" resultType="User">
-		<if test="page != null and page.db == 'oracle'">
-			select <include refid="all_column"/>
-			from (
-					select rownum rn, <include refid="all_column"/>
-					from (
-		</if>
-							select <include refid="all_column"/>
-							from <include refid="table_user"/>
-							<where>
-								<include refid="query_param"/>
-							</where>
-		<if test="page != null and page.order != null">order by ${page.order}</if>
-							<if test="page !=null and page.db == 'mysql'">
-								limit #{page.from},#{page.count}
-							</if>
-		<if test="page !=null and page.db == 'oracle'">				
-						)v1
-						where rownum &lt; = #{page.end}
-				)v2
-			where rn &gt; = #{page.start}
-		</if>
-	</select>
-	
-	<select id="findRelation " parameterType="map" resultMap="userMap">
-		<if test="page != null and page.db == 'oracle'">
-			select <include refid="all_column"/>
-			from (
-					select rownum rn, <include refid="all_column"/>
-					from (
-		</if>
-							select 
-								<include refid="all_column"/>
-								<include refid="all_column_user_role"/><!-- 关联表（用户角色关联表）字段名 -->
-							from 
-								<include refid="table_user"/>
-								left join <include refid="table_user_role"/><!-- 关联表（用户角色关联表） -->
-							<where>
-								<include refid="query_param"/>
-							</where>
-							<if test="page != null and page.order != null"> order by ${page.order}</if>
-							<if test="page !=null and page.db == 'mysql'">
-							<include refid="query_param_user_role"/><!-- 关联表（用户角色关联表）查询条件 -->
-								limit #{page.from},#{page.count}
-							</if>
-		<if test="page !=null and page.db == 'oracle'">				
-						)v1
-						where rownum &lt; = #{page.end}
-				)v2
-			where rn &gt; = #{page.start}
-		</if>
-	</select>
-	
-	<!-- count -->
-	<select id="count" parameterType="map" resultType="int">
-		select count(1)
-		from <include refid="table_user"/>
-		<where>
-			<include refid="query_param"/>
-		</where>
-		<if test="sort !=null"> order by ${sort}</if>
-	</select>
-	
-	<select id="countAll" resultType="int">
-		select count(1) from <include refid="table_user"/>
-	</select>
+    <!-- sql模板 -->
+    <!-- ########## 主表开始 ########## -->
+    <!-- 表名 -->
+    <sql id="mainTable_noAlias">boss_perm_user</sql>
+    <sql id="mainTable_withAlias">
+        <include refid="mainTable_noAlias"/>
+        u
+    </sql>
+    <!-- 字段名 -->
+    <sql id="mainTable_allColumn_noPrefix">id, userAccount, userPwd, userName, gender, qq, telephone, mobilePhone,
+        email, enabled, remark
+    </sql>
+    <sql id="mainTable_allColumn_aliasPrefix">u.id, u.userAccount, u.userPwd, u.userName, u.gender, u.qq, u.telephone,
+        u.mobilePhone, u.email, u.enabled, u.remark
+    </sql>
+    <!-- 查询条件 -->
+    <sql id="mainTable_queryParam">
+        <if test='id != null'>and u.id = #{id}</if>
+        <if test="userAccount != null">and u.userAccount like concat('%', #{userAccount}, '%')</if>
+        <if test="userPwd != null">and u.userPwd like concat('%', #{userPwd}, '%')</if>
+        <if test="userName != null">and u.userName like concat('%', #{userName}, '%')</if>
+        <if test="gender != null">and u.gender = #{gender}</if>
+        <if test="qq != null">and u.qq like concat('%', #{qq}, '%')</if>
+        <if test="telephone != null">and u.telephone like concat('%', #{telephone}, '%')</if>
+        <if test="mobilePhone != null">and u.mobilePhone like concat('%', #{mobilePhone}, '%')</if>
+        <if test="email != null">and u.email like concat('%', #{email}, '%')</if>
+        <if test="enabled != null">and u.enabled = #{enabled}</if>
+        <if test="remark != null">and u.remark like concat('%', #{remark}, '%')</if>
+    </sql>
+    <!-- ########## 主表结束 ########## -->
+
+    <!-- 关联表（用户角色关联表） -->
+    <sql id="table_user_role">boss_perm_user_role ur</sql>
+    <!-- 关联表（用户角色关联表）字段名 -->
+    <sql id="all_column_user_role">, ur.id urId, ur.userId urUserId, ur.roleId urRoleId</sql>
+    <!-- 关联表（用户角色关联表）查询条件 -->
+    <sql id="query_param_user_role">
+        <if test='urId != null'>and ur.id = #{urId}</if>
+        <if test='urUserId != null'>and ur.userId = #{urUserId}</if>
+        <if test='urRoleId != null'>and ur.roleId = #{urRoleId}</if>
+    </sql>
+
+    <!-- insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType">
+        #{id,jdbcType=VARCHAR} ,
+        #{userAccount,jdbcType=VARCHAR} ,
+        #{userPwd,jdbcType=VARCHAR} ,
+        #{userName,jdbcType=VARCHAR} ,
+        #{gender,jdbcType=TINYINT} ,
+        #{qq,jdbcType=VARCHAR} ,
+        #{telephone,jdbcType=VARCHAR} ,
+        #{mobilePhone,jdbcType=VARCHAR} ,
+        #{email,jdbcType=VARCHAR},
+        #{enabled,jdbcType=TINYINT},
+        #{remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- 批量insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType_foreach">
+        #{item.id,jdbcType=VARCHAR} ,
+        #{item.userAccount,jdbcType=VARCHAR} ,
+        #{item.userPwd,jdbcType=VARCHAR} ,
+        #{item.userName,jdbcType=VARCHAR} ,
+        #{item.gender,jdbcType=TINYINT} ,
+        #{item.qq,jdbcType=VARCHAR} ,
+        #{item.telephone,jdbcType=VARCHAR} ,
+        #{item.mobilePhone,jdbcType=VARCHAR} ,
+        #{item.email,jdbcType=VARCHAR},
+        #{item.enabled,jdbcType=TINYINT},
+        #{item.remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- update时的set部分 -->
+    <sql id="mainTable_updateParam">
+        <if test="userAccount != null">userAccount = #{userAccount},</if>
+        <if test="userPwd != null">userPwd = #{userPwd},</if>
+        <if test="userName != null">userName =#{userName},</if>
+        <if test="gender != null">gender =#{gender},</if>
+        <if test="qq != null">qq =#{qq},</if>
+        <if test="telephone != null">telephone =#{telephone},</if>
+        <if test="mobilePhone != null">mobilePhone =#{mobilePhone},</if>
+        <if test="email != null">email =#{email},</if>
+        <if test="enabled != null">enabled =#{enabled},</if>
+        <if test="remark != null">remark =#{remark}</if>
+    </sql>
+
+    <!-- insert -->
+    <insert id="add" parameterType="User">
+        INSERT INTO
+        <include refid="mainTable_noAlias"/>
+        (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+        (<include refid="mainTable_allColumn_jdbcType"/>)
+    </insert>
+
+    <insert id="batchAdd" parameterType="collection">
+        INSERT INTO
+        <include refid="mainTable_noAlias"/>
+        (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+        <foreach collection="collection" item="item" index="index" separator=",">
+            (<include refid="mainTable_allColumn_jdbcType_foreach"/>)
+        </foreach>
+    </insert>
+
+    <!-- update -->
+    <update id="update" parameterType="User">
+        update
+        <include refid="mainTable_noAlias"/>
+        <set>
+            <include refid="mainTable_updateParam"/>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="string">
+        delete from
+        <include refid="mainTable_noAlias"/>
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="collection">
+        delete from
+        <include refid="mainTable_noAlias"/>
+        where id in
+        <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!-- select -->
+    <select id="get" parameterType="string" resultType="User">
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+        <include refid="mainTable_withAlias"/>
+        where id=#{id}
+    </select>
+
+    <select id="find" parameterType="map" resultType="User">
+        <!-- oracle开始 -->
+        <if test="page != null and page.db == 'oracle'">
+            select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+            select rownum rn,
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+        </if>
+        <!-- oracle结束 -->
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+        <include refid="mainTable_withAlias"/>
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+        <if test="page != null and page.order != null">
+            order by ${page.order}
+        </if>
+        <if test="page !=null and page.db == 'mysql'">
+            limit #{page.from}, #{page.count}
+        </if>
+        <!-- oracle开始 -->
+        <if test="page !=null and page.db == 'oracle'">
+            )v1
+            where rownum &lt; = #{page.end}
+            )v2
+            where rn &gt; = #{page.start}
+        </if>
+        <!-- oracle结束 -->
+    </select>
+
+    <select id="findRelation " parameterType="map" resultMap="mainMap">
+        <if test="page != null and page.db == 'oracle'">
+            select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+            select rownum rn,
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+        </if>
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        <include refid="all_column_user_role"/><!-- 关联表（用户角色关联表）字段名 -->
+        from
+        <include refid="mainTable_withAlias"/>
+        left join
+        <include refid="table_user_role"/><!-- 关联表（用户角色关联表） -->
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+        <if test="page != null and page.order != null">order by ${page.order}</if>
+        <if test="page !=null and page.db == 'mysql'">
+            <include refid="query_param_user_role"/><!-- 关联表（用户角色关联表）查询条件 -->
+            limit #{page.from},#{page.count}
+        </if>
+        <if test="page !=null and page.db == 'oracle'">
+            )v1
+            where rownum &lt; = #{page.end}
+            )v2
+            where rn &gt; = #{page.start}
+        </if>
+    </select>
+
+    <!-- count -->
+    <select id="count" parameterType="map" resultType="int">
+        select
+        count(1)
+        from
+        <include refid="mainTable_withAlias"/>
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+    </select>
+
+    <select id="countAll" resultType="int">
+        select
+        count(1)
+        from
+        <include refid="mainTable_withAlias"/>
+    </select>
 </mapper>

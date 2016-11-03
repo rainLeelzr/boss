@@ -1,50 +1,43 @@
 package com.rain.boss.perm.controller;
 
-import javax.annotation.Resource;
-
 import com.rain.boss.BaseController;
+import com.rain.boss.perm.biz.UserBiz;
+import com.rain.boss.perm.entity.User;
+import com.rain.boss.web.Resp;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rain.boss.perm.biz.UserBiz;
+import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
-@RequestMapping("/boss/user")
+@RequestMapping("/boss/perm")
 public class UserController extends BaseController {
 
-	@Resource
-	private UserBiz userBiz;
+    @Resource
+    private UserBiz userBiz;
 
-	@RequestMapping("/list")
-	public String list() {
-		System.err.println(userBiz.countAll());
-		
-		System.out.println("-----gdsg----dg0dsdgsdgdddddddddddddddddddddddddd000");
-		System.out.println(234);
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String page() {
+        System.out.println("/boss/perm/user/page");
+        return "boss/perm/user/page";
+    }
 
-		return "list";
+    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Resp users() {
+        List<User> users = userBiz.findAll();
+        System.out.println("/boss/user/list");
+        return Resp.success(users);
+    }
 
-	}
-
-	@RequestMapping("/lis2")
-	public String list2() {
-		System.err.println(userBiz.countAll());
-
-		System.out.println("-s--s--21111111dd1111222");
-
-		return "list";
-
-	}
-
-
-	@RequestMapping("/lis3")
-	public String list3() {
-		System.err.println(userBiz.countAll());
-
-		System.out.println("-s--s--21111111dd1111222");
-
-		return "list";
-
-	}
-
+    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Resp add(User user) {
+        System.out.println(user);
+        int count = userBiz.add(user);
+        return count == 1 ? Resp.success() : Resp.fail();
+    }
 }

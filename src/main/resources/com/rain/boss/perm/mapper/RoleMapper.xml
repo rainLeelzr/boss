@@ -2,21 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rain.boss.perm.mapper.RoleMapper">
     <!-- 字段映射mapper -->
-    <resultMap id="roleMap" type="Role">
+    <resultMap id="mainMap" type="Role">
     </resultMap>
 
     <!-- sql模板 -->
+    <!-- ########## 主表开始 ########## -->
     <!-- 表名 -->
-    <sql id="noAlias_table_role">boss_perm_role</sql>
-    <sql id="table_role">
-        <include refid="noAlias_table_role"/>
+    <sql id="mainTable_noAlias">boss_perm_role</sql>
+    <sql id="mainTable_withAlias">
+        <include refid="mainTable_noAlias"/>
         r
     </sql>
     <!-- 字段名 -->
-    <sql id="noAlias_all_column">id, parentId, roleName, roleType, enabled, remark </sql>
-    <sql id="all_column">r.id, r.parentId, r.roleName, r.roleType, r.enabled, r.remark</sql>
+    <sql id="mainTable_allColumn_noPrefix">id, parentId, roleName, roleType, enabled, remark</sql>
+    <sql id="mainTable_allColumn_aliasPrefix">r.id, r.parentId, r.roleName, r.roleType, r.enabled, r.remark</sql>
     <!-- 查询条件 -->
-    <sql id="query_param">
+    <sql id="mainTable_queryParam">
         <if test='id != null'>and r.id = #{id}</if>
         <if test="parentId != null">and r.parentId = #{parentId}</if>
         <if test="roleName != null">and r.roleName like concat('%', #{roleName}, '%')</if>
@@ -24,6 +25,7 @@
         <if test="enabled != null">and r.enabled = #{enabled}</if>
         <if test="remark != null">and r.remark like concat('%', #{remark}, '%')</if>
     </sql>
+    <!-- ########## 主表结束 ########## -->
 
     <!-- 关联表（用户角色关联表） -->
     <sql id="table_role_role">boss_perm_user_role ur</sql>
@@ -37,7 +39,7 @@
     </sql>
 
     <!-- insert时的value部分 -->
-    <sql id="all_column_jdbcType">
+    <sql id="mainTable_allColumn_jdbcType">
         #{id,jdbcType=VARCHAR},
         #{parentId,jdbcType=VARCHAR},
         #{roleName,jdbcType=VARCHAR},
@@ -47,7 +49,7 @@
     </sql>
 
     <!-- 批量insert时的value部分 -->
-    <sql id="all_column_jdbcType_foreach">
+    <sql id="mainTable_allColumn_jdbcType_foreach">
         #{item.id,jdbcType=VARCHAR},
         #{item.parentId,jdbcType=VARCHAR},
         #{item.roleName,jdbcType=VARCHAR},
@@ -57,7 +59,7 @@
     </sql>
 
     <!-- update时的set部分 -->
-    <sql id="update_param">
+    <sql id="mainTable_updateParam">
         <if test="parentId != null">parentId = #{parentId},</if>
         <if test="roleName != null">roleName = #{roleName},</if>
         <if test="roleType != null">roleType =#{roleType},</if>
@@ -68,28 +70,28 @@
     <!-- insert -->
     <insert id="add" parameterType="Role">
         INSERT INTO
-        <include refid="noAlias_table_role"/>
-        (<include refid="noAlias_all_column"/>)
+        <include refid="mainTable_noAlias"/>
+        (<include refid="mainTable_allColumn_noPrefix"/>)
         VALUES
-        (<include refid="all_column_jdbcType"/>)
+        (<include refid="mainTable_allColumn_jdbcType"/>)
     </insert>
 
     <insert id="batchAdd" parameterType="collection">
         INSERT INTO
-        <include refid="noAlias_table_role"/>
-        (<include refid="noAlias_all_column"/>)
+        <include refid="mainTable_noAlias"/>
+        (<include refid="mainTable_allColumn_noPrefix"/>)
         VALUES
         <foreach collection="collection" item="item" index="index" separator=",">
-            (<include refid="all_column_jdbcType_foreach"/>)
+            (<include refid="mainTable_allColumn_jdbcType_foreach"/>)
         </foreach>
     </insert>
 
     <!-- update -->
     <update id="update" parameterType="Role">
         update
-        <include refid="noAlias_table_role"/>
+        <include refid="mainTable_noAlias"/>
         <set>
-            <include refid="update_param"/>
+            <include refid="mainTable_updateParam"/>
         </set>
         where id=#{id}
     </update>
@@ -97,13 +99,13 @@
     <!-- delete -->
     <delete id="delete" parameterType="string">
         delete from
-        <include refid="noAlias_table_role"/>
+        <include refid="mainTable_noAlias"/>
         where id = #{id}
     </delete>
 
     <delete id="deleteByIds" parameterType="collection">
         delete from
-        <include refid="noAlias_table_role"/>
+        <include refid="mainTable_noAlias"/>
         where id in
         <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
             #{item}
@@ -113,58 +115,64 @@
     <!-- select -->
     <select id="get" parameterType="string" resultType="Role">
         select
-        <include refid="all_column"/>
+        <include refid="mainTable_allColumn_aliasPrefix"/>
         from
-        <include refid="table_role"/>
+        <include refid="mainTable_withAlias"/>
         where id=#{id}
     </select>
 
     <select id="find" parameterType="map" resultType="Role">
+        <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">
             select
-            <include refid="all_column"/>
+            <include refid="mainTable_allColumn_aliasPrefix"/>
             from (
             select rownum rn,
-            <include refid="all_column"/>
+            <include refid="mainTable_allColumn_aliasPrefix"/>
             from (
         </if>
+        <!-- oracle结束 -->
         select
-        <include refid="all_column"/>
+        <include refid="mainTable_allColumn_aliasPrefix"/>
         from
-        <include refid="table_role"/>
+        <include refid="mainTable_withAlias"/>
         <where>
-            <include refid="query_param"/>
+            <include refid="mainTable_queryParam"/>
         </where>
-        <if test="page != null and page.order != null">order by ${page.order}</if>
-        <if test="page !=null and page.db == 'mysql'">
-            limit #{page.from},#{page.count}
+        <if test="page != null and page.order != null">
+            order by ${page.order}
         </if>
+        <if test="page !=null and page.db == 'mysql'">
+            limit #{page.from}, #{page.count}
+        </if>
+        <!-- oracle开始 -->
         <if test="page !=null and page.db == 'oracle'">
             )v1
             where rownum &lt; = #{page.end}
             )v2
             where rn &gt; = #{page.start}
         </if>
+        <!-- oracle结束 -->
     </select>
 
-    <select id="findRelation " parameterType="map" resultMap="roleMap">
+    <select id="findRelation " parameterType="map" resultMap="mainMap">
         <if test="page != null and page.db == 'oracle'">
             select
-            <include refid="all_column"/>
+            <include refid="mainTable_allColumn_aliasPrefix"/>
             from (
             select rownum rn,
-            <include refid="all_column"/>
+            <include refid="mainTable_allColumn_aliasPrefix"/>
             from (
         </if>
         select
-        <include refid="all_column"/>
+        <include refid="mainTable_allColumn_aliasPrefix"/>
         <include refid="all_column_user_role"/><!-- 关联表（用户角色关联表）字段名 -->
         from
-        <include refid="table_role"/>
+        <include refid="mainTable_withAlias"/>
         left join
         <include refid="table_role_role"/><!-- 关联表（用户角色关联表） -->
         <where>
-            <include refid="query_param"/>
+            <include refid="mainTable_queryParam"/>
         </where>
         <if test="page != null and page.order != null">order by ${page.order}</if>
         <if test="page !=null and page.db == 'mysql'">
@@ -181,17 +189,19 @@
 
     <!-- count -->
     <select id="count" parameterType="map" resultType="int">
-        select count(1)
+        select
+        count(1)
         from
-        <include refid="table_role"/>
+        <include refid="mainTable_withAlias"/>
         <where>
-            <include refid="query_param"/>
+            <include refid="mainTable_queryParam"/>
         </where>
-        <if test="sort !=null">order by ${sort}</if>
     </select>
 
     <select id="countAll" resultType="int">
-        select count(1) from
-        <include refid="table_role"/>
+        select
+        count(1)
+        from
+        <include refid="mainTable_withAlias"/>
     </select>
 </mapper>

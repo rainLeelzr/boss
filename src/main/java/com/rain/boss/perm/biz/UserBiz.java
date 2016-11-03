@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,11 @@ public class UserBiz {
     }
 
     public List<User> find(Map<String, ?> params) {
+        return userService.find(params);
+    }
+
+    public List<User> findAll() {
+        Map<String, ?> params = new HashMap<>();
         return userService.find(params);
     }
 
