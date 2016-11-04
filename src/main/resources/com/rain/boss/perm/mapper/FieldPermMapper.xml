@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.boss.perm.mapper.FieldPermMapper">
+    <!-- 字段映射mapper -->
+    <resultMap id="mainMap" type="FieldPerm">
+    </resultMap>
+
+    <!-- sql模板 -->
+    <!-- ########## 主表开始 ########## -->
+    <!-- 表名 -->
+    <sql id="mainTable_noAlias">Boss_Perm_FieldPerm</sql>
+    <sql id="mainTable_withAlias">
+        <include refid="mainTable_noAlias"/>
+        fp
+    </sql>
+    <!-- 字段名 -->
+    <sql id="mainTable_allColumn_noPrefix">id, positionFunPermId, fieldResourceId, isMainTable, isShow, orderNum, enabled, remark</sql>
+    <sql id="mainTable_allColumn_aliasPrefix">fp.id, fp.positionFunPermId, fp.fieldResourceId, fp.isMainTable, fp.isShow, fp.orderNum, fp.enabled, fp.remark</sql>
+    <!-- 查询条件 -->
+    <sql id="mainTable_queryParam">
+        <if test='id != null'>and fp.id = #{id}</if>
+        <if test="positionFunPermId != null">and fp.positionFunPermId = #{positionFunPermId}</if>
+        <if test="fieldResourceId != null">and fp.fieldResourceId = #{fieldResourceId}</if>
+        <if test="isMainTable != null">and fp.isMainTable = #{isMainTable}</if>
+        <if test="isShow != null">and fp.isShow = #{isShow}</if>
+        <if test="orderNum != null">and fp.orderNum = #{orderNum}</if>
+        <if test="enabled != null">and fp.enabled = #{enabled}</if>
+        <if test="remark != null">and fp.remark = #{remark}</if>
+    </sql>
+    <!-- ########## 主表结束 ########## -->
+
+    <!-- 关联表（用户角色关联表） -->
+    <sql id="table_role_role">boss_perm_user_role ur</sql>
+    <!-- 关联表（用户角色关联表）字段名 -->
+    <sql id="all_column_user_role">, ufp.id urId, ufp.userId urUserId, ufp.roleId urRoleId</sql>
+    <!-- 关联表（用户角色关联表）查询条件 -->
+    <sql id="query_param_user_role">
+        <if test='urId != null'>and ufp.id = #{urId}</if>
+        <if test='urUserId != null'>and ufp.userId = #{urUserId}</if>
+        <if test='urRoleId != null'>and ufp.roleId = #{urRoleId}</if>
+    </sql>
+
+    <!-- insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType">
+        #{id,jdbcType=VARCHAR},
+        #{positionFunPermId,jdbcType=VARCHAR},
+        #{fieldResourceId,jdbcType=VARCHAR},
+        #{isMainTable,jdbcType=VARCHAR},
+        #{isShow,jdbcType=TINYINT},
+        #{orderNum,jdbcType=INTEGER},
+        #{enabled,jdbcType=TINYINT},
+        #{remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- 批量insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType_foreach">
+        #{item.id,jdbcType=VARCHAR},
+        #{item.positionFunPermId,jdbcType=VARCHAR},
+        #{item.fieldResourceId,jdbcType=VARCHAR},
+        #{item.isMainTable,jdbcType=VARCHAR},
+        #{item.isShow,jdbcType=TINYINT},
+        #{item.orderNum,jdbcType=INTEGER},
+        #{item.enabled,jdbcType=TINYINT},
+        #{item.remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- update时的set部分 -->
+    <sql id="mainTable_updateParam">
+        <if test="positionFunPermId != null">positionFunPermId = #{positionFunPermId},</if>
+        <if test="fieldResourceId != null">fieldResourceId = #{fieldResourceId},</if>
+        <if test="isMainTable != null">isMainTable = #{isMainTable},</if>
+        <if test="isShow != null">isShow = #{isShow},</if>
+        <if test="orderNum != null">orderNum = #{orderNum},</if>
+        <if test="enabled != null">enabled = #{enabled},</if>
+        <if test="remark != null">remark = #{remark}</if>
+    </sql>
+
+    <!-- insert -->
+    <insert id="add" parameterType="FieldPerm">
+        INSERT INTO
+            <include refid="mainTable_noAlias"/>
+            (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+            (<include refid="mainTable_allColumn_jdbcType"/>)
+    </insert>
+
+    <insert id="batchAdd" parameterType="collection">
+        INSERT INTO
+            <include refid="mainTable_noAlias"/>
+            (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+            <foreach collection="collection" item="item" index="index" separator=",">
+                (<include refid="mainTable_allColumn_jdbcType_foreach"/>)
+            </foreach>
+    </insert>
+
+    <!-- update -->
+    <update id="update" parameterType="FieldPerm">
+        update
+            <include refid="mainTable_noAlias"/>
+        <set>
+            <include refid="mainTable_updateParam"/>
+        </set>
+        where id= #{id}
+    </update>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="string">
+        delete from
+            <include refid="mainTable_noAlias"/>
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="collection">
+        delete from
+            <include refid="mainTable_noAlias"/>
+        where id in
+            <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </delete>
+
+    <!-- select -->
+    <select id="get" parameterType="string" resultType="FieldPerm">
+        select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+            <include refid="mainTable_withAlias"/>
+        where id= #{id}
+    </select>
+
+    <select id="find" parameterType="map" resultType="FieldPerm">
+        <!-- oracle开始 -->
+        <if test="page != null and page.db == 'oracle'">
+            select
+                <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+                    select rownum rn,
+                        <include refid="mainTable_allColumn_aliasPrefix"/>
+                    from (
+        </if>
+        <!-- oracle结束 -->
+                            select
+                                <include refid="mainTable_allColumn_aliasPrefix"/>
+                            from
+                                <include refid="mainTable_withAlias"/>
+                            <where>
+                                <include refid="mainTable_queryParam"/>
+                            </where>
+                            <if test="page != null and page.order != null">
+                                order by ${page.order}
+                            </if>
+                            <if test="page !=null and page.db == 'mysql'">
+                                limit #{page.from}, #{page.count}
+                            </if>
+        <!-- oracle开始 -->
+        <if test="page !=null and page.db == 'oracle'">
+                        )v1
+                    where rownum &lt; = #{page.end}
+                )v2
+            where rn &gt; = #{page.start}
+        </if>
+        <!-- oracle结束 -->
+    </select>
+
+    <select id="findRelation " parameterType="map" resultMap="mainMap">
+        <if test="page != null and page.db == 'oracle'">
+            select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+            select rownum rn,
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+        </if>
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        <include refid="all_column_user_role"/><!-- 关联表（用户角色关联表）字段名 -->
+        from
+        <include refid="mainTable_withAlias"/>
+        left join
+        <include refid="table_role_role"/><!-- 关联表（用户角色关联表） -->
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+        <if test="page != null and page.order != null">order by ${page.order}</if>
+        <if test="page !=null and page.db == 'mysql'">
+            <include refid="query_param_user_role"/><!-- 关联表（用户角色关联表）查询条件 -->
+            limit #{page.from},#{page.count}
+        </if>
+        <if test="page !=null and page.db == 'oracle'">
+            )v1
+            where rownum &lt; = #{page.end}
+            )v2
+            where rn &gt; = #{page.start}
+        </if>
+    </select>
+
+    <!-- count -->
+    <select id="count" parameterType="map" resultType="int">
+        select
+            count(1)
+        from
+            <include refid="mainTable_withAlias"/>
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+    </select>
+
+    <select id="countAll" resultType="int">
+        select
+            count(1)
+        from
+            <include refid="mainTable_withAlias"/>
+    </select>
+</mapper>

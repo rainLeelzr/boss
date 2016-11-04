@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.boss.perm.mapper.DataPermMapper">
+    <!-- 字段映射mapper -->
+    <resultMap id="mainMap" type="DataPerm">
+    </resultMap>
+
+    <!-- sql模板 -->
+    <!-- ########## 主表开始 ########## -->
+    <!-- 表名 -->
+    <sql id="mainTable_noAlias">Boss_Perm_DataPerm</sql>
+    <sql id="mainTable_withAlias">
+        <include refid="mainTable_noAlias"/>
+        dp
+    </sql>
+    <!-- 字段名 -->
+    <sql id="mainTable_allColumn_noPrefix">id, dataPermGroupId, fieldResourceId, isMainTable, funPermType, operatorSymbol, operatorValue, groupNum, orderNum, enabled, remark</sql>
+    <sql id="mainTable_allColumn_aliasPrefix">dp.id, dp.dataPermGroupId, dp.fieldResourceId, dp.isMainTable, dp.funPermType, dp.operatorSymbol, dp.operatorValue, dp.groupNum, dp.orderNum, dp.enabled, dp.remark</sql>
+    <!-- 查询条件 -->
+    <sql id="mainTable_queryParam">
+        <if test='id != null'>and dp.id = #{id}</if>
+        <if test="dataPermGroupId != null">and dp.dataPermGroupId = #{dataPermGroupId}</if>
+        <if test="fieldResourceId != null">and dp.fieldResourceId = #{fieldResourceId}</if>
+        <if test="isMainTable != null">and dp.isMainTable = #{isMainTable}</if>
+        <if test="funPermType != null">and dp.funPermType = #{funPermType}</if>
+        <if test="operatorSymbol != null">and dp.operatorSymbol = #{operatorSymbol}</if>
+        <if test="operatorValue != null">and dp.operatorValue = #{operatorValue}</if>
+        <if test="groupNum != null">and dp.groupNum = #{groupNum}</if>
+        <if test="orderNum != null">and dp.orderNum = #{orderNum}</if>
+        <if test="enabled != null">and dp.enabled = #{enabled}</if>
+        <if test="remark != null">and dp.remark = #{remark}</if>
+    </sql>
+    <!-- ########## 主表结束 ########## -->
+
+    <!-- 关联表（用户角色关联表） -->
+    <sql id="table_role_role">boss_perm_user_role ur</sql>
+    <!-- 关联表（用户角色关联表）字段名 -->
+    <sql id="all_column_user_role">, ufp.id urId, ufp.userId urUserId, ufp.roleId urRoleId</sql>
+    <!-- 关联表（用户角色关联表）查询条件 -->
+    <sql id="query_param_user_role">
+        <if test='urId != null'>and ufp.id = #{urId}</if>
+        <if test='urUserId != null'>and ufp.userId = #{urUserId}</if>
+        <if test='urRoleId != null'>and ufp.roleId = #{urRoleId}</if>
+    </sql>
+
+    <!-- insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType">
+        #{id,jdbcType=VARCHAR},
+        #{dataPermGroupId,jdbcType=VARCHAR},
+        #{fieldResourceId,jdbcType=VARCHAR},
+        #{isMainTable,jdbcType=VARCHAR},
+        #{funPermType,jdbcType=VARCHAR},
+        #{operatorSymbol,jdbcType=VARCHAR},
+        #{operatorValue,jdbcType=VARCHAR},
+        #{groupNum,jdbcType=VARCHAR},
+        #{orderNum,jdbcType=VARCHAR},
+        #{enabled,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- 批量insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType_foreach">
+        #{item.id,jdbcType=VARCHAR},
+        #{item.dataPermGroupId,jdbcType=VARCHAR},
+        #{item.fieldResourceId,jdbcType=VARCHAR},
+        #{item.isMainTable,jdbcType=VARCHAR},
+        #{item.funPermType,jdbcType=VARCHAR},
+        #{item.operatorSymbol,jdbcType=VARCHAR},
+        #{item.operatorValue,jdbcType=VARCHAR},
+        #{item.groupNum,jdbcType=VARCHAR},
+        #{item.orderNum,jdbcType=VARCHAR},
+        #{item.enabled,jdbcType=VARCHAR},
+        #{item.remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- update时的set部分 -->
+    <sql id="mainTable_updateParam">
+        <if test="dataPermGroupId != null">dataPermGroupId = #{dataPermGroupId},</if>
+        <if test="fieldResourceId != null">fieldResourceId = #{fieldResourceId},</if>
+        <if test="isMainTable != null">isMainTable = #{isMainTable},</if>
+        <if test="funPermType != null">funPermType = #{funPermType},</if>
+        <if test="operatorSymbol != null">operatorSymbol = #{operatorSymbol},</if>
+        <if test="operatorValue != null">operatorValue = #{operatorValue},</if>
+        <if test="groupNum != null">groupNum = #{groupNum},</if>
+        <if test="orderNum != null">orderNum = #{orderNum},</if>
+        <if test="enabled != null">enabled = #{enabled},</if>
+        <if test="remark != null">remark = #{remark},</if>
+    </sql>
+
+    <!-- insert -->
+    <insert id="add" parameterType="DataPerm">
+        INSERT INTO
+            <include refid="mainTable_noAlias"/>
+            (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+            (<include refid="mainTable_allColumn_jdbcType"/>)
+    </insert>
+
+    <insert id="batchAdd" parameterType="collection">
+        INSERT INTO
+            <include refid="mainTable_noAlias"/>
+            (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+            <foreach collection="collection" item="item" index="index" separator=",">
+                (<include refid="mainTable_allColumn_jdbcType_foreach"/>)
+            </foreach>
+    </insert>
+
+    <!-- update -->
+    <update id="update" parameterType="DataPerm">
+        update
+            <include refid="mainTable_noAlias"/>
+        <set>
+            <include refid="mainTable_updateParam"/>
+        </set>
+        where id= #{id}
+    </update>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="string">
+        delete from
+            <include refid="mainTable_noAlias"/>
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="collection">
+        delete from
+            <include refid="mainTable_noAlias"/>
+        where id in
+            <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </delete>
+
+    <!-- select -->
+    <select id="get" parameterType="string" resultType="DataPerm">
+        select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+            <include refid="mainTable_withAlias"/>
+        where id= #{id}
+    </select>
+
+    <select id="find" parameterType="map" resultType="DataPerm">
+        <!-- oracle开始 -->
+        <if test="page != null and page.db == 'oracle'">
+            select
+                <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+                    select rownum rn,
+                        <include refid="mainTable_allColumn_aliasPrefix"/>
+                    from (
+        </if>
+        <!-- oracle结束 -->
+                            select
+                                <include refid="mainTable_allColumn_aliasPrefix"/>
+                            from
+                                <include refid="mainTable_withAlias"/>
+                            <where>
+                                <include refid="mainTable_queryParam"/>
+                            </where>
+                            <if test="page != null and page.order != null">
+                                order by ${page.order}
+                            </if>
+                            <if test="page !=null and page.db == 'mysql'">
+                                limit #{page.from}, #{page.count}
+                            </if>
+        <!-- oracle开始 -->
+        <if test="page !=null and page.db == 'oracle'">
+                        )v1
+                    where rownum &lt; = #{page.end}
+                )v2
+            where rn &gt; = #{page.start}
+        </if>
+        <!-- oracle结束 -->
+    </select>
+
+    <select id="findRelation " parameterType="map" resultMap="mainMap">
+        <if test="page != null and page.db == 'oracle'">
+            select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+            select rownum rn,
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+        </if>
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        <include refid="all_column_user_role"/><!-- 关联表（用户角色关联表）字段名 -->
+        from
+        <include refid="mainTable_withAlias"/>
+        left join
+        <include refid="table_role_role"/><!-- 关联表（用户角色关联表） -->
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+        <if test="page != null and page.order != null">order by ${page.order}</if>
+        <if test="page !=null and page.db == 'mysql'">
+            <include refid="query_param_user_role"/><!-- 关联表（用户角色关联表）查询条件 -->
+            limit #{page.from},#{page.count}
+        </if>
+        <if test="page !=null and page.db == 'oracle'">
+            )v1
+            where rownum &lt; = #{page.end}
+            )v2
+            where rn &gt; = #{page.start}
+        </if>
+    </select>
+
+    <!-- count -->
+    <select id="count" parameterType="map" resultType="int">
+        select
+            count(1)
+        from
+            <include refid="mainTable_withAlias"/>
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+    </select>
+
+    <select id="countAll" resultType="int">
+        select
+            count(1)
+        from
+            <include refid="mainTable_withAlias"/>
+    </select>
+</mapper>
