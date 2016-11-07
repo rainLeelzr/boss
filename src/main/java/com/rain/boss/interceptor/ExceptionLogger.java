@@ -1,20 +1,18 @@
 package com.rain.boss.interceptor;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.rain.boss.perm.entity.User;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import com.rain.boss.perm.entity.User;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
- * 记录异常日志的方面组件， 在系统发生异常时记录其日志信息；
+ * 记录异常日志的方面组件， 在controller包中的类发生异常时记录其日志信息；
  */
 //@Component
 @Aspect
@@ -23,7 +21,7 @@ public class ExceptionLogger {
 	@Resource
 	private HttpServletRequest request;
 
-	@Around("within(com.rain..*)")
+	@Around("within(com.rain..*.controller.*)")
 	public Object log(ProceedingJoinPoint p) {
 		Object obj = null;
 		try {

@@ -25,7 +25,7 @@ public class OrgBizTest extends AbstractTestClass {
 
     private static Org genEntity() {
         Org entity = new Org();
-        entity.setId();
+        entity.genId();
         entity.setParentId(RandomStringUtils.randomNumeric(60));
         entity.setOrgName(RandomStringUtils.randomNumeric(60));
         entity.setOrgNickName(RandomStringUtils.randomNumeric(60));
@@ -67,7 +67,7 @@ public class OrgBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         Org e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

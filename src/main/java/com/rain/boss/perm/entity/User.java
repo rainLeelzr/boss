@@ -4,28 +4,25 @@ import com.rain.boss.BaseEntity;
 
 public class User extends BaseEntity {
 
+    public static final byte GENDER_MAN = 1;
+    public static final byte GENDER_WOMAN = 2;
     private static final long serialVersionUID = 1L;
-
     /**
      * 账号:
      */
     private String userAccount;
-
     /**
      * 密码:
      */
     private String userPwd;
-
     /**
      * 姓名:
      */
     private String userName;
-
     /**
      * 性别:
      */
     private Byte gender;
-
     /**
      * qq:
      */
@@ -49,6 +46,18 @@ public class User extends BaseEntity {
      * 备注:
      */
     private String remark;
+
+    public String getParsedGender() {
+        switch (gender) {
+            case GENDER_MAN:
+                return "男";
+            case GENDER_WOMAN:
+                return "女";
+            default:
+                return "";
+        }
+
+    }
 
     public String getUserAccount() {
         return userAccount;

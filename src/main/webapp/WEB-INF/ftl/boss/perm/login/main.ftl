@@ -1,398 +1,283 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>boss</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="/frame/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/frame/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="/frame/ionicons-2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/frame/AdminLTE-2.3.7/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
-  <link rel="stylesheet" href="/frame/AdminLTE-2.3.7/dist/css/skins/skin-blue.min.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <link rel="stylesheet" href="/js/miniui/themes/default/miniui.css">
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<body>
+<div id="layout1" class="mini-layout" style="width: 100%; height: 100%;" splitSize="0">
+  <div class="header" region="north" height="120" showSplit="false" showHeader="false">
+    <h1 style="margin: 0; padding: 15px; height:39px; cursor: default; font-family: 'Trebuchet MS', Arial, sans-serif;"></h1>
 
-  <!-- Main Header -->
-  <header class="main-header">
+    <div style="position: absolute; top: 10px; right: 10px;">
+      选择皮肤：
+      <select id="selectSkin" onchange="onSkinChange(this.value)" style="width:100px;" >
+          <option value="">Default</option>
+          <option value="blue">Blue</option>
+          <option value="gray">Gray</option>
+          <option value="olive2003">Olive2003</option>
+          <option value="blue2003">Blue2003</option>
+          <option value="blue2010">Blue2010</option>
+          <option value="bootstrap">Bootstrap</option>
 
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
-    </a>
+          <option value="metro">metro</option>
+          <option value="metro-green">metro-green</option>
+          <option value="metro-orange">metro-orange</option>
 
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the messages -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <!-- User Image -->
-                        <img src="/frame/AdminLTE-2.3.7/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <!-- Message title and timestamp -->
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <!-- The message -->
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                </ul>
-                <!-- /.menu -->
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- /.messages-menu -->
+          <option value="jqueryui-uilightness">jqueryui-uilightness</option>
+          <option value="jqueryui-humanity">jqueryui-humanity</option>
+          <option value="jqueryui-excitebike">jqueryui-excitebike</option>
+          <option value="jqueryui-cupertino">jqueryui-cupertino</option>
+      </select>
 
-          <!-- Notifications Menu -->
-          <li class="dropdown notifications-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- Inner Menu: contains the notifications -->
-                <ul class="menu">
-                  <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <!-- end notification -->
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- Inner menu: contains the tasks -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <!-- Task title and progress text -->
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <!-- The progress bar -->
-                      <div class="progress xs">
-                        <!-- Change the css width attribute to simulate progress -->
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
-              </li>
-            </ul>
-          </li>
-          <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="/frame/AdminLTE-2.3.7/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
-              <li class="user-header">
-                <img src="/frame/AdminLTE-2.3.7/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
-                </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="/frame/AdminLTE-2.3.7/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-
-      <!-- Your Page Content Here -->
-
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Anything you want
+      <span style="color:#fff">当前机构岗位：</span>
+      <span style="color:#fff" id="myPos"></span>
+      <a class="mini-button mini-button-iconTop" iconCls="icon-download" onclick="downloadControl" plain="true" style="color:#fff">控件下载</a>
+      <a class="mini-button mini-button-iconTop" iconCls="icon-reload" onclick="changePos" plain="true" style="color:#fff">切换岗位</a>
+      <a class="mini-button mini-button-iconTop" iconCls="icon-reload" onclick="reLogin" plain="true" style="color:#fff">重新登录</a>
+      <a class="mini-button mini-button-iconTop" iconCls="icon-close" onclick="logout" plain="true" style="color:#fff">退出</a>
     </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-  </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    <!-- 申请公开管理菜单id是6f3f51e8-1fc5-44d3-8d63-9a46567b2ae9 -->
+    <ul id="menu2" class="mini-menubar mymenu" style="width: 100%;">
+      <!--<li onclick="loadPortal"><span style="cursor:pointer">我的桌面</span></li>-->
+    <#list userMenu as menu>
+      <#if menu_index != 0>
+        <li class="separator"></li>
+      </#if>
+      <li onclick="onMenuClick('${menu.id}')"><span style="cursor:pointer">${menu.menuName}</span></li>
+      <#if menu_index == 0>
+        <li class="separator"></li>
+        <li><a href="${jforumSSO}" target="_blank" style="text-decoration:none;">论坛</a></li>
+      </#if>
+    </#list>
     </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane active" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript::;">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+  </div>
 
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
+  <div title="south" region="south" showSplit="false" showHeader="false" height="30">
+    <div style="line-height: 28px; text-align: center; cursor: default;">Copyright © 广州政通信息科技有限公司版权所有<div style="display:inline;" onclick="window.open('/');">&nbsp;&nbsp;&nbsp;</div></div>
+  </div>
 
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript::;">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="pull-right-container">
-                  <span class="label label-danger pull-right">70%</span>
-                </span>
-              </h4>
+  <div showHeader="false" region="west" width="200" maxWidth="250" minWidth="100" >
+    <!--OutlookMenu-->
+    <div id="leftTree" class="mini-outlookmenu" url="" onitemclick="showTab" idField="id" parentField="pid" textField="text" borderStyle="border:0"></div>
 
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
+  </div>
 
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+  <div title="center" region="center">
+    <iframe id="mainframe" frameborder="0" name="main" style="width: 100%; height: 100%;" border="0"></iframe>
+    <!--<div showCollapseButton="false" style="border: 0px;width: 100%; height: 100%;">-->
+    <!--Tabs-->
+    <div id="mainTabs" class="mini-tabs bg-toolbar" activeIndex="0" style="width: 100%; height: 100%;" onactivechanged="onTabsActiveChanged" ontabload="ontabload"></div>
+  </div>
 </div>
-<!-- ./wrapper -->
+</div>
 
-<!-- REQUIRED JS SCRIPTS -->
+<script type="text/javascript">
+  $(function(){
+    $("#myPos").load("/base/changePos!getPosName.action");
+    var skin = mini.Cookie.get("miniuiSkin");
+    if (skin) {
+      var selectSkin = document.getElementById("selectSkin");
+      selectSkin.value = skin;
+    }
+  });
+  mini.parse();
 
+  function downloadControl () {
+    window.open("/ntko/NtkoAllControlSetup.zip");
+    // setTimeout(function () {
+    // 	window.clo
+    // })
+  }
+
+  function showTab(e) {
+    var tabs = mini.get("mainTabs");
+    var item = e.item;
+    var id = "tab$" + item.id;
+    var tab = tabs.getTab(id);
+    if (!tab) {
+      tab = {};
+      tab._nodeid = item.id;
+      tab.name = id;
+      tab.title = item.text;
+      tab.showCloseButton = true;
+      tab.refreshOnClick = true;
+      //这里拼接了url，实际项目，应该从后台直接获得完整的url地址
+      tab.url = item.url;
+
+      tabs.addTab(tab);
+    }
+    tabs.activeTab(tab);
+  }
+
+  function onTabsActiveChanged(e) {
+    var tabs = e.sender;
+    var tab = tabs.getActiveTab();
+    if (tab && tab._nodeid) {
+
+      //var node = tree.getNode(tab._nodeid);
+      //if (node && !tree.isSelectedNode(node)) {
+      //	tree.selectNode(node);
+      //}
+    }
+  }
+
+  /**
+   *功能:加载子菜单
+   */
+  function onMenuClick(menuId) {
+    //menuId
+    var layout = mini.get("layout1");
+    layout.showRegion("west");
+    var tree = mini.get("leftTree");
+    tree.load("/perm/menu!getAllSubMenu.action?id=" + menuId);
+    var tabs = mini.get("mainTabs");
+    tabs.removeAll();
+    $("#mainframe").hide();
+    $("#mainTabs").show();
+  }
+
+  /**
+   *功能:加载我的桌面
+   */
+  function loadPortal() {
+    var layout = mini.get("layout1");
+    layout.hideRegion("west");
+    var tabs = mini.get("mainTabs");
+    tabs.removeAll();
+    $("#mainframe").show();
+    layout.showRegion("center");
+    $("#mainTabs").hide();
+    if ($("#mainframe").attr("src") == undefined) {
+      $("#mainframe").attr("src", "/desktop/desktopPersonal!gotoMyDesktop.action");//此处为我的桌面加载的地址
+    }
+  }
+
+  //loadPortal();
+
+  /**
+   *功能：退出
+   */
+  function logout() {
+    if (confirm("确定要退出系统吗？")) {
+      location.href = "/perm/portal!logout.action";
+      window.close();
+    }
+  }
+
+  /**
+   *功能：重新登录 by tan 2014-6-6
+   */
+  function reLogin() {
+    if (confirm("确定要重新登录吗？")) {
+      location.href = "/perm/portal!reLogin.action?t=" + new Date().getTime();
+    }
+  }
+
+  /**
+   *切换岗位
+   */
+  function changePos(){
+    if(confirm("确定要切换岗位吗？")) {
+      location.href = "/base/changePos.action";
+    }
+  }
+
+  ////////////////////////////子页面iframe调用
+  //一级菜单
+  function selectMenuByPending(menuId) {
+    var layout = mini.get("layout1");
+    layout.showRegion("west");
+    var tree = mini.get("leftTree");
+    tree.load("/perm/menu!getAllSubMenu.action?id=6f3f51e8-1fc5-44d3-8d63-9a46567b2ae9");
+    var tabs = mini.get("mainTabs");
+    tabs.removeAll();
+    $("#mainframe").hide();
+    $("#mainTabs").show();
+  }
+
+  //main页面显示tab
+  var applyPublicationId = undefined;
+  function showTabByPending(applyId) {
+    applyPublicationId = applyId;//保存我的桌面传来的申请id
+    //6187e531-c51b-4817-802d-7defe00cbc7f
+    ///businessflow/applyPublication.action
+    //受理申请
+    var tabs = mini.get("mainTabs");
+    var itemId = "6187e531-c51b-4817-802d-7defe00cbc7f";
+    var id = "tab$" + itemId;
+    var tab = tabs.getTab(id);
+    if (!tab) {
+      tab = {};
+      tab._nodeid = itemId;
+      tab.name = id;
+      tab.title = "受理申请";
+      tab.showCloseButton = true;
+      tab.refreshOnClick = true;
+      //这里拼接了url，实际项目，应该从后台直接获得完整的url地址
+      tab.url = "/businessflow/applyPublication.action";
+
+      tabs.addTab(tab);
+    }
+    tabs.activeTab(tab);
+  }
+
+  //登录后直接进入“申请事项受理”菜单
+  function showAccept() {
+    var layout = mini.get("layout1");
+    layout.showRegion("west");
+    var tree = mini.get("leftTree");
+    tree.load("/perm/menu!getAllSubMenu.action?id=6f3f51e8-1fc5-44d3-8d63-9a46567b2ae9");
+    var tabs = mini.get("mainTabs");
+    tabs.removeAll();
+    $("#mainframe").hide();
+    $("#mainTabs").show();
+    tree.selectNode({id:"6187e531-c51b-4817-802d-7defe00cbc7f"});
+
+    var tabs = mini.get("mainTabs");
+    //console.log(tabs);
+    var itemId = "6187e531-c51b-4817-802d-7defe00cbc7f";
+    var id = "tab$" + itemId;
+    var tab = tabs.getTab(id);
+    if (!tab) {
+      tab = {};
+      tab._nodeid = itemId;
+      tab.name = id;
+      tab.title = "受理申请";
+      tab.showCloseButton = true;
+      tab.refreshOnClick = true;
+      tab.url = "/businessflow/applyPublication.action";
+      tabs.addTab(tab);
+      //console.log(tab);
+    }
+    tabs.activeTab(tab);
+  }
+
+  //setTimeout(showAccept, 500);
+
+  function ontabload(){
+    if(applyPublicationId){
+      var tabs = mini.get("mainTabs");
+      var tab = tabs.getTab("tab$6187e531-c51b-4817-802d-7defe00cbc7f");
+      var ifm = tabs.getTabIFrameEl(tab);
+      ifm.contentWindow.process(applyPublicationId);
+      applyPublicationId = undefined;//打开process页面后，applyPublicationId置空，避免点击其他二级菜单时，继续加载process页面
+    }else{
+      return;
+    }
+  }
+
+
+</script>
 <script src="/js/jquery/jquery-2.2.4.js"></script>
-<script src="/frame/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="/frame/AdminLTE-2.3.7/dist/js/app.min.js"></script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+<script src="/js/miniui/miniui.js"></script>
 </body>
 </html>

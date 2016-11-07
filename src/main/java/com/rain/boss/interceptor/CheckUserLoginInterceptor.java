@@ -1,12 +1,11 @@
 package com.rain.boss.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.rain.boss.perm.entity.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.rain.boss.perm.entity.User;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录检查拦截器，在用户访问除登录之外的任何 功能时，判断用户是否已经登录成功，若没有登录 则踢回登录页面。
@@ -20,7 +19,7 @@ public class CheckUserLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object obj) throws Exception {
         User user = (User) request.getSession().getAttribute("");
-        System.out.println("------------------------->checkLogin!" + Thread.currentThread());
+        user = new User();
         if (user == null) {
             response.sendRedirect(request.getContextPath()
                     + "/boss/login");

@@ -151,6 +151,14 @@
         where id=#{id}
     </select>
 
+    <select id="getByAccountAndPwd" parameterType="string" resultType="User">
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+        <include refid="mainTable_withAlias"/>
+        where userAccount = #{arg0} and userPwd = #{arg1}
+    </select>
+
     <select id="find" parameterType="map" resultType="User">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">

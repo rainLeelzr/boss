@@ -9,7 +9,7 @@ public abstract class BaseEntity implements Serializable {
 
 	protected String id;
 
-	public void setId() {
+	public void genId() {
 		this.id = UUID.randomUUID().toString();
 	}
 
@@ -17,7 +17,7 @@ public abstract class BaseEntity implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void genId(String id) {
 		this.id = id;
 	}
 

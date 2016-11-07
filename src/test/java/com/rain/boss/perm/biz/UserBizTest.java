@@ -25,7 +25,7 @@ public class UserBizTest extends AbstractTestClass {
 
     private static User genEntity() {
         User entity = new User();
-        entity.setId();
+        entity.genId();
         entity.setUserAccount(RandomStringUtils.randomNumeric(4));
         entity.setUserPwd("123456");
         entity.setUserName(RandomStringUtils.randomNumeric(4));
@@ -68,7 +68,7 @@ public class UserBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         User e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

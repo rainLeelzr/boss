@@ -25,7 +25,7 @@ public class FieldResourceBizTest extends AbstractTestClass {
 
     private static FieldResource genEntity() {
         FieldResource entity = new FieldResource();
-        entity.setId();
+        entity.genId();
         entity.setTableResourceId(RandomStringUtils.randomNumeric(60));
         entity.setFieldName(RandomStringUtils.randomNumeric(60));
         entity.setFieldDataType((byte) RandomUtils.nextInt(1, 5));
@@ -63,7 +63,7 @@ public class FieldResourceBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         FieldResource e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

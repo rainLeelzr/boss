@@ -21,6 +21,8 @@ public interface UserMapper {
 
     User get(String id);
 
+    User getByAccountAndPwd(String userAccount, String userPwd);
+
     List<User> find(Map<String, ?> params);
 
     int count(Map<String, ?> params);

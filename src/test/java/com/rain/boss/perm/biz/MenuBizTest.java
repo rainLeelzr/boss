@@ -25,7 +25,7 @@ public class MenuBizTest extends AbstractTestClass {
 
     private static Menu genEntity() {
         Menu entity = new Menu();
-        entity.setId();
+        entity.genId();
         entity.setParentId(RandomStringUtils.randomNumeric(60));
         entity.setMenuName(RandomStringUtils.randomNumeric(60));
         entity.setMenuUrl(RandomStringUtils.randomNumeric(60));
@@ -64,7 +64,7 @@ public class MenuBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         Menu e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

@@ -38,6 +38,10 @@ public class UserService {
         return userMapper.get(id);
     }
 
+    public User getByAccountAndPwd(String userAccount, String userPwd) {
+        return userMapper.getByAccountAndPwd(userAccount, userPwd);
+    }
+
     public int countAll() {
         return userMapper.countAll();
     }

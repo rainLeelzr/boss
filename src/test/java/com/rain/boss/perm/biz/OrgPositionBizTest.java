@@ -24,7 +24,7 @@ public class OrgPositionBizTest extends AbstractTestClass {
 
     private static OrgPosition genEntity() {
         OrgPosition entity = new OrgPosition();
-        entity.setId();
+        entity.genId();
         entity.setOrgId(RandomStringUtils.randomNumeric(60));
         entity.setPositionId(RandomStringUtils.randomNumeric(60));
         return entity;
@@ -59,7 +59,7 @@ public class OrgPositionBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         OrgPosition e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

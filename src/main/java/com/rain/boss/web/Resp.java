@@ -4,7 +4,7 @@ public class Resp {
     //业务操作成功为true，失败为false
     private boolean success;
 
-    //业务操作成功为1，失败为0，其他为自定义
+    //业务操作成功为1，失败为0，未登录为2，其他为自定义
     private int code;
 
     //业务操作结果描述
@@ -51,12 +51,11 @@ public class Resp {
         return d;
     }
 
-    public static Resp fail(Object data) {
+    public static Resp fail(String message) {
         Resp d = new Resp();
         d.setSuccess(false);
-        d.setCode(Message.success.getCode());
-        d.setMessage(Message.success.getMessage());
-        d.setData(data);
+        d.setCode(Message.fail.getCode());
+        d.setMessage(message);
         return d;
     }
 

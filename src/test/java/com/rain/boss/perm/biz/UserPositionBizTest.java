@@ -24,7 +24,7 @@ public class UserPositionBizTest extends AbstractTestClass {
 
     private static UserPosition genEntity() {
         UserPosition entity = new UserPosition();
-        entity.setId();
+        entity.genId();
         entity.setUserId(RandomStringUtils.randomNumeric(4));
         entity.setPositionId(RandomStringUtils.randomNumeric(4));
         return entity;
@@ -59,7 +59,7 @@ public class UserPositionBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         UserPosition e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

@@ -24,7 +24,7 @@ public class UserRoleBizTest extends AbstractTestClass {
 
     private static UserRole genEntity() {
         UserRole entity = new UserRole();
-        entity.setId();
+        entity.genId();
         entity.setUserId(RandomStringUtils.randomNumeric(4));
         entity.setRoleId(RandomStringUtils.randomNumeric(4));
         return entity;
@@ -59,7 +59,7 @@ public class UserRoleBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         UserRole e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

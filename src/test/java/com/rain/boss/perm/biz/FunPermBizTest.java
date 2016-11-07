@@ -25,7 +25,7 @@ public class FunPermBizTest extends AbstractTestClass {
 
     private static FunPerm genEntity() {
         FunPerm entity = new FunPerm();
-        entity.setId();
+        entity.genId();
         entity.setFunPermName(RandomStringUtils.randomNumeric(60));
         entity.setFunPermType((byte) RandomUtils.nextInt(1, 5));
         entity.setFunPermUrl(RandomStringUtils.randomNumeric(60));
@@ -63,7 +63,7 @@ public class FunPermBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         FunPerm e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

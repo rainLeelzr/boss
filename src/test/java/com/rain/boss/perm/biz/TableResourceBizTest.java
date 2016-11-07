@@ -24,7 +24,7 @@ public class TableResourceBizTest extends AbstractTestClass {
 
     private static TableResource genEntity() {
         TableResource entity = new TableResource();
-        entity.setId();
+        entity.genId();
         entity.setTableName(RandomStringUtils.randomNumeric(60));
         entity.setNickName(RandomStringUtils.randomNumeric(60));
         entity.setRemark(RandomStringUtils.randomNumeric(60));
@@ -60,7 +60,7 @@ public class TableResourceBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         TableResource e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

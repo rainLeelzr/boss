@@ -24,7 +24,7 @@ public class PositionFunPermDataPermSetBizTest extends AbstractTestClass {
 
     private static PositionFunPermDataPermSet genEntity() {
         PositionFunPermDataPermSet entity = new PositionFunPermDataPermSet();
-        entity.setId();
+        entity.genId();
         entity.setPositionFunPermId(RandomStringUtils.randomNumeric(60));
         entity.setDataPermSetId(RandomStringUtils.randomNumeric(60));
         return entity;
@@ -59,7 +59,7 @@ public class PositionFunPermDataPermSetBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         PositionFunPermDataPermSet e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

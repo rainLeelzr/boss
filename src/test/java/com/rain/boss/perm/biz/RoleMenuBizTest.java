@@ -24,7 +24,7 @@ public class RoleMenuBizTest extends AbstractTestClass {
 
     private static RoleMenu genEntity() {
         RoleMenu entity = new RoleMenu();
-        entity.setId();
+        entity.genId();
         entity.setRoleId(RandomStringUtils.randomNumeric(60));
         entity.setMenuId(RandomStringUtils.randomNumeric(60));
         return entity;
@@ -59,7 +59,7 @@ public class RoleMenuBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         RoleMenu e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

@@ -19,21 +19,21 @@ public class UserController extends BaseController {
     @Resource
     private UserBiz userBiz;
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String page() {
-        System.out.println("/boss/perm/user/page");
-        return "boss/perm/user/page";
+        System.out.println("/boss/perm/users/page");
+        return "boss/perm/users/page";
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Resp users() {
         List<User> users = userBiz.findAll();
-        System.out.println("/boss/user/list");
+        System.out.println("/boss/users/list");
         return Resp.success(users);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/users", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Resp add(User user) {
         System.out.println(user);

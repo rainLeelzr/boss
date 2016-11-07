@@ -1,7 +1,9 @@
 package com.rain.boss.perm.controller;
 
 import com.rain.boss.BaseController;
-import com.rain.boss.perm.biz.UserBiz;
+import com.rain.boss.exception.acceptable.UserLoginException;
+import com.rain.boss.perm.biz.LoginBiz;
+import com.rain.boss.perm.dto.UserDto;
 import com.rain.boss.perm.entity.User;
 import com.rain.boss.web.Resp;
 import org.springframework.stereotype.Controller;
@@ -16,16 +18,22 @@ import javax.annotation.Resource;
 public class LoginController extends BaseController {
 
     @Resource
-    private UserBiz userBiz;
+    private LoginBiz loginBiz;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
+        System.out.println("im /boss/login  get");
         return "boss/perm/login/login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login() {
-        return "redirect:/boss/main";
+    @ResponseBody
+    public Resp login(User user) throws UserLoginException {
+        UserDto userDto;
+        userDto = loginBiz.doLogin(user);
+//        } catch (UserLoginException e) {
+//            return Resp.fail(e.getMessage());
+        return Resp.success(userDto);
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -33,11 +41,5 @@ public class LoginController extends BaseController {
         return "boss/perm/login/main";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Resp add(User user) {
-        System.out.println(user);
-        int count = userBiz.add(user);
-        return count == 1 ? Resp.success() : Resp.fail();
-    }
+
 }

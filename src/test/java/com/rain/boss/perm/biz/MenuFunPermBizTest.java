@@ -24,7 +24,7 @@ public class MenuFunPermBizTest extends AbstractTestClass {
 
     private static MenuFunPerm genEntity() {
         MenuFunPerm entity = new MenuFunPerm();
-        entity.setId();
+        entity.genId();
         entity.setMenuId(RandomStringUtils.randomNumeric(60));
         entity.setFunPermId(RandomStringUtils.randomNumeric(60));
         return entity;
@@ -59,7 +59,7 @@ public class MenuFunPermBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         MenuFunPerm e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

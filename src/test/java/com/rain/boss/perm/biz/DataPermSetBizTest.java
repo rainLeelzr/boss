@@ -25,7 +25,7 @@ public class DataPermSetBizTest extends AbstractTestClass {
 
     private static DataPermSet genEntity() {
         DataPermSet entity = new DataPermSet();
-        entity.setId();
+        entity.genId();
         entity.setPositionFunPermId(RandomStringUtils.randomNumeric(60));
         entity.setSetName(RandomStringUtils.randomNumeric(60));
         entity.setGroupRelationship(RandomStringUtils.randomNumeric(60));
@@ -63,7 +63,7 @@ public class DataPermSetBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         DataPermSet e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 

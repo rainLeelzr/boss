@@ -48,8 +48,9 @@
     <mvc:default-servlet-handler/>
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/frame/**" location="/frame/"/>
-    <mvc:resources mapping="/image/**" location="/images/"/>
+    <mvc:resources mapping="/image/**" location="/image/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/index.html" location="/"/>
 
     <!-- 开启MVC注解扫描 -->
     <mvc:annotation-driven/>
@@ -99,9 +100,16 @@
             <!--<mvc:exclude-mapping path="/login/validateCode.do"/>-->
             <!--<mvc:exclude-mapping path="/login/isExist.do"/>-->
             <!--<mvc:exclude-mapping path="/login/register.do"/>-->
-            <!--系统平台-->
+            <!-- 静态资源 -->
+            <mvc:exclude-mapping path="/index.html"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/image/**"/>
+            <mvc:exclude-mapping path="/frame/**"/>
+            <!-- 功能-->
             <mvc:exclude-mapping path="/boss/login"/>
-            <mvc:exclude-mapping path="/boss/perm/user"/>
+            <mvc:exclude-mapping path="/boss/main"/>
+            <mvc:exclude-mapping path="/boss/perm/users"/>
             <bean class="com.rain.boss.interceptor.CheckUserLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
@@ -133,6 +141,7 @@
             <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="do*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
     <aop:config proxy-target-class="true">

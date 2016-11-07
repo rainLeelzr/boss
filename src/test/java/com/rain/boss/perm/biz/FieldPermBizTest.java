@@ -25,7 +25,7 @@ public class FieldPermBizTest extends AbstractTestClass {
 
     private static FieldPerm genEntity() {
         FieldPerm entity = new FieldPerm();
-        entity.setId();
+        entity.genId();
         entity.setPositionFunPermId(RandomStringUtils.randomNumeric(60));
         entity.setFieldResourceId(RandomStringUtils.randomNumeric(60));
         entity.setIsMainTable((byte) RandomUtils.nextInt(1, 5));
@@ -65,7 +65,7 @@ public class FieldPermBizTest extends AbstractTestClass {
     @Test
     public void test5Update() {
         FieldPerm e = genEntity();
-        e.setId(globalEntity.getId());
+        e.genId(globalEntity.getId());
         Assert.assertEquals(1, biz.update(e));
     }
 
