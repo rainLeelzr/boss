@@ -18,12 +18,4 @@ public class UserLoginException extends AcceptableException {
         super(cause);
     }
 
-    /**
-     * 用户名或密码错误
-     *
-     * @return UserLoginException
-     */
-    public static UserLoginException accountOrPwdError() {
-        return new UserLoginException("用户名或密码错误");
-    }
 }

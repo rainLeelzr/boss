@@ -48,6 +48,9 @@ public class User extends BaseEntity {
     private String remark;
 
     public String getParsedGender() {
+        if(gender == null){
+            return "";
+        }
         switch (gender) {
             case GENDER_MAN:
                 return "男";
@@ -56,7 +59,6 @@ public class User extends BaseEntity {
             default:
                 return "";
         }
-
     }
 
     public String getUserAccount() {

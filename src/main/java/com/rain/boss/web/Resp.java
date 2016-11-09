@@ -17,7 +17,7 @@ public class Resp {
 
     }
 
-    public static Resp success(){
+    public static Resp success() {
         Resp d = new Resp();
         d.setSuccess(true);
         d.setCode(Message.success.getCode());
@@ -56,6 +56,14 @@ public class Resp {
         d.setSuccess(false);
         d.setCode(Message.fail.getCode());
         d.setMessage(message);
+        return d;
+    }
+
+    public static Resp fail(Message message) {
+        Resp d = new Resp();
+        d.setSuccess(false);
+        d.setCode(message.getCode());
+        d.setMessage(message.getMessage());
         return d;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -19,8 +20,8 @@ public class UserController extends BaseController {
     @Resource
     private UserBiz userBiz;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String page() {
+    @RequestMapping(value = "/users/page", method = RequestMethod.GET)
+    public String page(HttpServletRequest request) {
         System.out.println("/boss/perm/users/page");
         return "boss/perm/users/page";
     }
@@ -29,14 +30,12 @@ public class UserController extends BaseController {
     @ResponseBody
     public Resp users() {
         List<User> users = userBiz.findAll();
-        System.out.println("/boss/users/list");
         return Resp.success(users);
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Resp add(User user) {
-        System.out.println(user);
         int count = userBiz.add(user);
         return count == 1 ? Resp.success() : Resp.fail();
     }

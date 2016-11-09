@@ -6,6 +6,7 @@ import com.rain.boss.perm.entity.User;
 import com.rain.boss.perm.entity.UserToken;
 import com.rain.boss.perm.service.UserService;
 import com.rain.boss.perm.service.UserTokenService;
+import com.rain.boss.web.Message;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -22,7 +23,7 @@ public class LoginBiz {
     public UserDto doLogin(User user) throws UserLoginException {
         User _user = userService.getByAccountAndPwd(user.getUserAccount(), user.getUserPwd());
         if (_user == null) {
-            throw UserLoginException.accountOrPwdError();
+            throw new UserLoginException(Message.accountOrPwdError.getMessage());
         }
 
         UserToken userToken = userTokenService.create(_user);

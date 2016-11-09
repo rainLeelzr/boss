@@ -28,4 +28,6 @@ public interface UserTokenMapper {
     int count(Map<String, ?> params);
 
     int countAll();
+
+    UserToken getByToken(String token);
 }

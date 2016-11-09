@@ -1,6 +1,7 @@
 package com.rain.boss.perm.controller;
 
 import com.rain.boss.BaseController;
+import com.rain.boss.annotation.UnLoginResource;
 import com.rain.boss.exception.acceptable.UserLoginException;
 import com.rain.boss.perm.biz.LoginBiz;
 import com.rain.boss.perm.dto.UserDto;
@@ -21,6 +22,7 @@ public class LoginController extends BaseController {
     private LoginBiz loginBiz;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @UnLoginResource
     public String loginPage() {
         System.out.println("im /boss/login  get");
         return "boss/perm/login/login";
@@ -28,6 +30,7 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
+    @UnLoginResource
     public Resp login(User user) throws UserLoginException {
         UserDto userDto;
         userDto = loginBiz.doLogin(user);

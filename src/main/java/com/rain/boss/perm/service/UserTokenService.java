@@ -85,4 +85,8 @@ public class UserTokenService {
         //查找
         return userToken;
     }
+
+    public UserToken getByToken(String token) {
+        return userTokenMapper.getByToken(token);
+    }
 }

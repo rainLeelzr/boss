@@ -17,22 +17,21 @@ public class UserDto {
     //userToken
     private String token;
 
-    public UserDto(){
+    public UserDto() {
 
     }
 
     public UserDto(User user, UserToken userToken) {
-        UserDto userDto = new UserDto();
-        userDto.setUserId(user.getId());
-        userDto.setUserAccount(user.getUserAccount());
-        userDto.setUserName(user.getUserName());
-        userDto.setGender(user.getParsedGender());
-        userDto.setQq(user.getQq());
-        userDto.setTelephone(user.getTelephone());
-        userDto.setMobilePhone(user.getMobilePhone());
-        userDto.setEmail(user.getEmail());
+        this.userId = user.getId();
+        this.userAccount = user.getUserAccount();
+        this.userName = user.getUserName();
+        this.gender = user.getParsedGender();
+        this.qq = user.getQq();
+        this.telephone = user.getTelephone();
+        this.mobilePhone = user.getMobilePhone();
+        this.email = user.getEmail();
 
-        userDto.setToken(userToken.getToken());
+        this.token = userToken.getToken();
     }
 
     public String getUserId() {

@@ -125,6 +125,14 @@
         where userId= #{userId}
     </select>
 
+    <select id="getByToken" resultType="UserToken">
+        select
+          <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+          <include refid="mainTable_withAlias"/>
+        where token = #{token}
+    </select>
+
     <select id="find" parameterType="map" resultType="UserToken">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">

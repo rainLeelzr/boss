@@ -22,12 +22,4 @@ public class AcceptableException extends Exception {
         super(cause);
     }
 
-    /**
-     * 用户名或密码错误
-     *
-     * @return UserLoginException
-     */
-    public static AcceptableException accountOrPwdError() {
-        return new AcceptableException("用户名或密码错误");
-    }
 }
