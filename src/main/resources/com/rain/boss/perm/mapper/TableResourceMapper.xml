@@ -113,7 +113,7 @@
         where id=#{id}
     </select>
 
-    <select id="find" parameterType="map" resultType="TableResource">
+    <select id="findPage" parameterType="map" resultType="TableResource">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">
             select

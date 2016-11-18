@@ -1,8 +1,19 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Administrator">
     <words>
+      <w>checkcolumn</w>
+      <w>datagrid</w>
       <w>elems</w>
       <w>entitys</w>
+      <w>iframe</w>
+      <w>indexcolumn</w>
+      <w>miniui</w>
+      <w>mtool</w>
+      <w>ondestroy</w>
+      <w>onload</w>
+      <w>radiobuttonlist</w>
+      <w>rownum</w>
+      <w>textbox</w>
     </words>
   </dictionary>
 </component>

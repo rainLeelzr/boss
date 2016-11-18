@@ -1,7 +1,9 @@
 package com.rain.boss.interceptor;
 
 import com.rain.boss.exception.acceptable.AcceptableException;
+import com.rain.boss.exception.acceptable.UnLoginException;
 import com.rain.boss.interceptor.annotation.AnnotationCache;
+import com.rain.boss.util.SysConst;
 import com.rain.boss.web.Message;
 import com.rain.boss.web.Resp;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,8 +12,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
@@ -22,17 +25,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AjaxRequestExceptionHandler {
 
-    @Resource
-    private HttpServletRequest request;
-
     @Around("within(com.rain..*.controller.*)")
-    public Object log(ProceedingJoinPoint p) throws Throwable {
+    public Object exceptionHandler(ProceedingJoinPoint p) throws Throwable {
         Object obj;
         try {
             obj = p.proceed();
         } catch (Exception e) {
             if (AnnotationCache.hasAnnotation(p, ResponseBody.class)) {
-                if (e instanceof AcceptableException) {
+                if (e instanceof UnLoginException) {
+                    return Resp.fail(Message.unLogin);
+                } else if (e instanceof AcceptableException) {
                     return Resp.fail(e.getMessage());
                 } else {
                     return Resp.fail(Message.sysException);
@@ -40,10 +42,12 @@ public class AjaxRequestExceptionHandler {
             }
 
             //非ajax请求，则继续抛出异常
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                    .getRequest();
             if (e instanceof AcceptableException) {
-                request.setAttribute("exceptionMsg", e.getMessage());
+                request.setAttribute(SysConst.EXCEPTION_MSG_KEY, e.getMessage());
             } else {
-                request.setAttribute("exceptionMsg", Message.sysException);
+                request.setAttribute(SysConst.EXCEPTION_MSG_KEY, Message.sysException);
             }
             throw e;
         }

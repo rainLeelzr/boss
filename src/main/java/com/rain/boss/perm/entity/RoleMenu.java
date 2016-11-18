@@ -1,6 +1,6 @@
 package com.rain.boss.perm.entity;
 
-import com.rain.boss.BaseEntity;
+import com.rain.boss.baseClass.entity.BaseEntity;
 
 public class RoleMenu extends BaseEntity {
 

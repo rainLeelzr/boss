@@ -20,6 +20,7 @@ public class AnnotationCache {
         }
         MethodSignature methodSignature = (MethodSignature) signature;
         Class<?> targetClass = p.getTarget().getClass();
+        Method[] methods = targetClass.getMethods();
         Method targetMethod = targetClass.getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
 
         Map<Method, Set<Class<?>>> methodsInClass = cache.get(targetClass);
@@ -28,13 +29,16 @@ public class AnnotationCache {
         }
 
         Set<Class<?>> annotationsInTargetMethod = methodsInClass.get(targetMethod);
+        if (annotationsInTargetMethod == null) {
+            return false;
+        }
         for (Class<?> annotation : annotationsInTargetMethod) {
             if (annotation.equals(targetAnnotation)) {
                 return true;
             }
         }
-
         return false;
+
     }
 
     /**
@@ -48,9 +52,9 @@ public class AnnotationCache {
         if (methodsInClass == null) {
             methodsInClass = Collections.synchronizedMap(new HashMap<Method,
                     Set<Class<?>>>());
-            Method[] allMethodsInTargetClass = targetClass.getDeclaredMethods();
+            Method[] allMethodsInTargetClass = targetClass.getMethods();
             for (Method tempMethod : allMethodsInTargetClass) {
-                Annotation[] declaredAnnotations = tempMethod.getDeclaredAnnotations();
+                Annotation[] declaredAnnotations = tempMethod.getAnnotations();
                 Set<Class<?>> annotationsInMethod = Collections.synchronizedSet(new HashSet<Class<?>>());
                 for (Annotation annotation : declaredAnnotations) {
                     Class<?> annotationClass = annotation.annotationType();

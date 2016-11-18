@@ -109,7 +109,7 @@
         where id=#{id}
     </select>
 
-    <select id="find" parameterType="map" resultType="MenuFunPerm">
+    <select id="findPage" parameterType="map" resultType="MenuFunPerm">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">
             select

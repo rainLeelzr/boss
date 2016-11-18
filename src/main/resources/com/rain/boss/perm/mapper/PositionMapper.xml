@@ -124,7 +124,7 @@
         where id=#{id}
     </select>
 
-    <select id="find" parameterType="map" resultType="Position">
+    <select id="findPage" parameterType="map" resultType="Position">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">
             select

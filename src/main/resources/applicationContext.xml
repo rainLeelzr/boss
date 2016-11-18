@@ -145,6 +145,6 @@
         </tx:attributes>
     </tx:advice>
     <aop:config proxy-target-class="true">
-        <aop:advisor advice-ref="txAdvice" pointcut="within(com.rain.*.*.biz.*)"/>
+        <aop:advisor advice-ref="txAdvice" pointcut="within(com.rain..service..*)"/>
     </aop:config>
 </beans>

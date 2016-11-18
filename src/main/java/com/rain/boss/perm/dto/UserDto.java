@@ -25,7 +25,7 @@ public class UserDto {
         this.userId = user.getId();
         this.userAccount = user.getUserAccount();
         this.userName = user.getUserName();
-        this.gender = user.getParsedGender();
+        this.gender = user.getGenderStr();
         this.qq = user.getQq();
         this.telephone = user.getTelephone();
         this.mobilePhone = user.getMobilePhone();

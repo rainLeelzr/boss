@@ -141,7 +141,7 @@
         where id= #{id}
     </select>
 
-    <select id="find" parameterType="map" resultType="DataPerm">
+    <select id="findPage" parameterType="map" resultType="DataPerm">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">
             select

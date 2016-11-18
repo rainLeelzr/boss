@@ -1,29 +1,31 @@
 package com.rain.boss.perm;
 
-import com.rain.boss.perm.biz.*;
+import com.rain.boss.perm.service.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        DataPermBizTest.class,
-        DataPermGroupBizTest.class,
-        DataPermSetBizTest.class,
-        FieldPermBizTest.class,
-        FieldResourceBizTest.class,
-        FunPermBizTest.class,
-        MenuBizTest.class,
-        MenuFunPermBizTest.class,
-        OrgBizTest.class,
-        OrgPositionBizTest.class,
-        PositionBizTest.class,
-        PositionFunPermBizTest.class,
-        PositionFunPermDataPermSetBizTest.class,
-        RoleBizTest.class,
-        RoleMenuBizTest.class,
-        TableResourceBizTest.class,
-        UserBizTest.class,
-        UserPositionBizTest.class,
-        UserRoleBizTest.class})
+        DataPermGroupServiceTest.class,
+        DataPermServiceTest.class,
+        DataPermSetServiceTest.class,
+        FieldPermServiceTest.class,
+        FieldResourceServiceTest.class,
+        FunPermServiceTest.class,
+        LoginServiceTest.class,
+        MenuFunPermServiceTest.class,
+        MenuServiceTest.class,
+        OrgPositionServiceTest.class,
+        OrgServiceTest.class,
+        PositionFunPermDataPermSetServiceTest.class,
+        PositionFunPermServiceTest.class,
+        PositionServiceTest.class,
+        RoleMenuServiceTest.class,
+        RoleServiceTest.class,
+        TableResourceServiceTest.class,
+        UserPositionServiceTest.class,
+        UserRoleServiceTest.class,
+        UserServiceTest.class,
+        UserTokenServiceTest.class})
 public abstract class PermTestSuite {
 }

@@ -1,15 +1,10 @@
 package com.rain.boss.perm.entity;
 
-import com.rain.boss.BaseEntity;
+import com.rain.boss.baseClass.entity.BaseEntity;
 
 public class UserRole extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键:
-     */
-    private java.lang.String id;
 
     /**
      * 用户id:

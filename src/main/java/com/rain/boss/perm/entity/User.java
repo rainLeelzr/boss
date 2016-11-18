@@ -1,12 +1,13 @@
 package com.rain.boss.perm.entity;
 
-import com.rain.boss.BaseEntity;
+import com.rain.boss.baseClass.entity.BaseEntity;
 
 public class User extends BaseEntity {
 
     public static final byte GENDER_MAN = 1;
     public static final byte GENDER_WOMAN = 2;
     private static final long serialVersionUID = 1L;
+
     /**
      * 账号:
      */
@@ -47,8 +48,8 @@ public class User extends BaseEntity {
      */
     private String remark;
 
-    public String getParsedGender() {
-        if(gender == null){
+    public String getGenderStr() {
+        if (gender == null) {
             return "";
         }
         switch (gender) {

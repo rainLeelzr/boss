@@ -133,7 +133,7 @@
         where id= #{id}
     </select>
 
-    <select id="find" parameterType="map" resultType="DataPermGroup">
+    <select id="findPage" parameterType="map" resultType="DataPermGroup">
         <!-- oracle开始 -->
         <if test="page != null and page.db == 'oracle'">
             select
