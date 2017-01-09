@@ -14,13 +14,14 @@
         m
     </sql>
     <!-- 字段名 -->
-    <sql id="mainTable_allColumn_noPrefix">id, parentId, menuName, menuUrl, orderNum, enabled, remark</sql>
-    <sql id="mainTable_allColumn_aliasPrefix">m.id, m.parentId, m.menuName, m.menuUrl, m.orderNum, m.enabled, m.remark</sql>
+    <sql id="mainTable_allColumn_noPrefix">id, parentId, menuName, ip, menuUrl, orderNum, enabled, remark</sql>
+    <sql id="mainTable_allColumn_aliasPrefix">m.id, m.parentId, m.menuName, m.ip, m.menuUrl, m.orderNum, m.enabled, m.remark</sql>
     <!-- 查询条件 -->
     <sql id="mainTable_queryParam">
         <if test='id != null'>and m.id = #{id}</if>
         <if test="parentId != null">and m.parentId = #{parentId}</if>
-        <if test="menuName != null">and m.menuName = #{menuName}</if>
+        <if test="menuName != null">and m.menuName like concat('%', #{menuName}, '%')</if>
+        <if test="type != null">and m.ip = #{ip}</if>
         <if test="menuUrl != null">and m.menuUrl = #{menuUrl}</if>
         <if test="orderNum != null">and m.orderNum = #{orderNum}</if>
         <if test="enabled != null">and m.enabled = #{enabled}</if>
@@ -44,6 +45,7 @@
         #{id,jdbcType=VARCHAR},
         #{parentId,jdbcType=VARCHAR},
         #{menuName,jdbcType=VARCHAR},
+        #{ip,jdbcType=TINYINT},
         #{menuUrl,jdbcType=VARCHAR},
         #{orderNum,jdbcType=INTEGER},
         #{enabled,jdbcType=TINYINT},
@@ -55,6 +57,7 @@
         #{item.id,jdbcType=VARCHAR},
         #{item.parentId,jdbcType=VARCHAR},
         #{item.menuName,jdbcType=VARCHAR},
+        #{item.ip,jdbcType=TINYINT},
         #{item.menuUrl,jdbcType=VARCHAR},
         #{item.orderNum,jdbcType=INTEGER},
         #{item.enabled,jdbcType=TINYINT},
@@ -65,10 +68,11 @@
     <sql id="mainTable_updateParam">
         <if test="parentId != null">parentId = #{parentId},</if>
         <if test="menuName != null">menuName = #{menuName},</if>
+        <if test="ip != null">ip = #{ip},</if>
         <if test="menuUrl != null">menuUrl = #{menuUrl},</if>
         <if test="orderNum != null">orderNum = #{orderNum},</if>
         <if test="enabled != null">enabled = #{enabled},</if>
-        <if test="remark != null">remark = #{remark},</if>
+        <if test="remark != null">remark = #{remark}</if>
     </sql>
 
     <!-- insert -->
@@ -208,4 +212,68 @@
         from
             <include refid="mainTable_withAlias"/>
     </select>
+
+    <select id="findByUserId" parameterType="string" resultType="Menu">
+        SELECT
+            id,
+            parentId,
+            menuName,
+            ip,
+            menuUrl,
+            orderNum
+        FROM
+            <include refid="mainTable_noAlias"/>
+        WHERE
+            enabled = 1
+        AND id IN (
+            SELECT DISTINCT
+                menuId
+            FROM
+                boss_perm_rolemenu
+            WHERE
+                roleId IN (
+                    SELECT
+                        roleId
+                    FROM
+                        boss_perm_userrole
+                    WHERE
+                        userId = #{userId}
+                )
+        )
+        ORDER BY
+            orderNum
+    </select>
+
+    <select id="findByParentId" parameterType="string" resultType="Menu">
+        SELECT
+            id,
+            parentId,
+            menuName,
+            ip,
+            menuUrl,
+            orderNum
+        FROM
+            boss_perm_menu
+        WHERE
+            parentId = #{parentId}
+        ORDER BY
+            orderNum;
+    </select>
+
+    <!--<select id="findParents" resultType="Menu">-->
+        <!--SELECT DISTINCT-->
+            <!--m1.id,-->
+            <!--m1.parentId,-->
+            <!--m1.menuName,-->
+            <!--m1.ip,-->
+            <!--m1.menuUrl,-->
+            <!--m1.orderNum-->
+        <!--FROM-->
+            <!--<include refid="mainTable_noAlias"/> m1-->
+        <!--LEFT JOIN <include refid="mainTable_noAlias"/> m2 ON m1.id = m2.parentId-->
+        <!--WHERE-->
+            <!--m2.id IS NOT NULL-->
+        <!--ORDER BY-->
+            <!--m1.orderNum;-->
+    <!--</select>-->
 </mapper>

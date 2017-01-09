@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends BaseService<User, UserMapper> {
 
-    public User getByAccountAndPwd(String userAccount, String userPwd) {
-        return mapper.getByAccountAndPwd(userAccount, userPwd);
+    public User getByAccount(String userAccount) {
+        return mapper.getByAccount(userAccount);
     }
 
 }

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.boss.base.mapper.RequestLogMapper">
+    <!-- 字段映射mapper -->
+    <resultMap id="mainMap" type="RequestLog">
+    </resultMap>
+
+    <!-- sql模板 -->
+    <!-- ########## 主表开始 ########## -->
+    <!-- 表名 -->
+    <sql id="mainTable_noAlias">Boss_Base_RequestLog</sql>
+    <sql id="mainTable_withAlias">
+        <include refid="mainTable_noAlias"/>
+        rl
+    </sql>
+    <!-- 字段名 -->
+    <sql id="mainTable_allColumn_noPrefix">id, clientIp, requestTime, responseTime, reqMethod, reqUri, reqParam, responseText, userAgent, reqResult, userId, userName, orgId, orgName, remark</sql>
+    <sql id="mainTable_allColumn_aliasPrefix">rl.id, rl.clientIp, rl.requestTime, rl.responseTime, rl.reqMethod, rl.reqUri, rl.reqParam, rl.responseText, rl.userAgent, rl.reqResult, rl.userId, rl.userName, rl.orgId, rl.orgName, rl.remark</sql>
+    <!-- 查询条件 -->
+    <sql id="mainTable_queryParam">
+        <if test="clientIp != null">and rl.clientIp = #{clientIp}</if>
+        <if test="requestTime != null">and rl.requestTime = #{requestTime}</if>
+        <if test="responseTime != null">and rl.responseTime = #{responseTime}</if>
+        <if test="reqMethod != null">and rl.reqMethod = #{reqMethod}</if>
+        <if test="reqUri != null">and rl.reqUri = #{reqUri}</if>
+        <if test="reqParam != null">and rl.reqParam = #{reqParam}</if>
+        <if test="responseText != null">and rl.responseText = #{responseText}</if>
+        <if test="userAgent != null">and rl.userAgent = #{userAgent}</if>
+        <if test="reqResult != null">and rl.reqResult = #{reqResult}</if>
+        <if test="userId != null">and rl.userId = #{userId}</if>
+        <if test="userName != null">and rl.userName = #{userName}</if>
+        <if test="orgId != null">and rl.orgId = #{orgId}</if>
+        <if test="orgName != null">and rl.orgName = #{orgName}</if>
+        <if test="remark != null">and rl.remark = #{remark}</if>
+    </sql>
+    <!-- ########## 主表结束 ########## -->
+
+    <!-- 关联表（用户角色关联表） -->
+    <sql id="table_role_role">boss_perm_user_role ur</sql>
+    <!-- 关联表（用户角色关联表）字段名 -->
+    <sql id="all_column_user_role">, ufp.id urId, ufp.userId urUserId, ufp.roleId urRoleId</sql>
+    <!-- 关联表（用户角色关联表）查询条件 -->
+    <sql id="query_param_user_role">
+        <if test='urId != null'>and ufp.id = #{urId}</if>
+        <if test='urUserId != null'>and ufp.userId = #{urUserId}</if>
+        <if test='urRoleId != null'>and ufp.roleId = #{urRoleId}</if>
+    </sql>
+
+    <!-- insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType">
+        #{id,jdbcType=VARCHAR},
+        #{clientIp,jdbcType=VARCHAR},
+        #{requestTime,jdbcType=TIMESTAMP},
+        #{responseTime,jdbcType=TIMESTAMP},
+        #{reqMethod,jdbcType=VARCHAR},
+        #{reqUri,jdbcType=VARCHAR},
+        #{reqParam,jdbcType=VARCHAR},
+        #{responseText,jdbcType=VARCHAR},
+        #{userAgent,jdbcType=VARCHAR},
+        #{reqResult,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},
+        #{orgId,jdbcType=VARCHAR},
+        #{orgName,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- 批量insert时的value部分 -->
+    <sql id="mainTable_allColumn_jdbcType_foreach">
+        #{item.id,jdbcType=VARCHAR},
+        #{item.clientIp,jdbcType=VARCHAR},
+        #{item.requestTime,jdbcType=TIMESTAMP},
+        #{item.responseTime,jdbcType=TIMESTAMP},
+        #{item.reqMethod,jdbcType=VARCHAR},
+        #{item.reqUri,jdbcType=VARCHAR},
+        #{item.reqParam,jdbcType=VARCHAR},
+        #{item.responseText,jdbcType=VARCHAR},
+        #{item.userAgent,jdbcType=VARCHAR},
+        #{item.reqResult,jdbcType=VARCHAR},
+        #{item.userId,jdbcType=VARCHAR},
+        #{item.userName,jdbcType=VARCHAR},
+        #{item.orgId,jdbcType=VARCHAR},
+        #{item.orgName,jdbcType=VARCHAR},
+        #{item.remark,jdbcType=VARCHAR}
+    </sql>
+
+    <!-- update时的set部分 -->
+    <sql id="mainTable_updateParam">
+        <if test="clientIp != null">clientIp = #{clientIp},</if>
+        <if test="requestTime != null">requestTime = #{requestTime},</if>
+        <if test="responseTime != null">responseTime = #{responseTime},</if>
+        <if test="reqMethod != null">reqMethod = #{reqMethod},</if>
+        <if test="reqUri != null">reqUri = #{reqUri},</if>
+        <if test="reqParam != null">reqParam = #{reqParam},</if>
+        <if test="responseText != null">responseText = #{responseText},</if>
+        <if test="userAgent != null">userAgent = #{userAgent},</if>
+        <if test="reqResult != null">reqResult = #{reqResult},</if>
+        <if test="userId != null">userId = #{userId},</if>
+        <if test="userName != null">userName = #{userName},</if>
+        <if test="orgId != null">orgId = #{orgId},</if>
+        <if test="orgName != null">orgName = #{orgName},</if>
+        <if test="remark != null">remark = #{remark}</if>
+    </sql>
+
+    <!-- insert -->
+    <insert id="add" parameterType="RequestLog">
+        INSERT INTO
+        <include refid="mainTable_noAlias"/>
+        (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+        (<include refid="mainTable_allColumn_jdbcType"/>)
+    </insert>
+
+    <insert id="batchAdd" parameterType="collection">
+        INSERT INTO
+        <include refid="mainTable_noAlias"/>
+        (<include refid="mainTable_allColumn_noPrefix"/>)
+        VALUES
+        <foreach collection="collection" item="item" index="index" separator=",">
+            (<include refid="mainTable_allColumn_jdbcType_foreach"/>)
+        </foreach>
+    </insert>
+
+    <!-- update -->
+    <update id="update" parameterType="RequestLog">
+        update
+        <include refid="mainTable_noAlias"/>
+        <set>
+            <include refid="mainTable_updateParam"/>
+        </set>
+        where id= #{id}
+    </update>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="string">
+        delete from
+        <include refid="mainTable_noAlias"/>
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="collection">
+        delete from
+        <include refid="mainTable_noAlias"/>
+        where id in
+        <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!-- select -->
+    <select id="get" parameterType="string" resultType="RequestLog">
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+        <include refid="mainTable_withAlias"/>
+        where id= #{id}
+    </select>
+
+    <select id="findPage" parameterType="map" resultType="RequestLog">
+        <!-- oracle开始 -->
+        <if test="page != null and page.db == 'oracle'">
+            select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+            select rownum rn,
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+        </if>
+        <!-- oracle结束 -->
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        from
+        <include refid="mainTable_withAlias"/>
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+        <if test="page != null and page.order != null">
+            order by ${page.order}
+        </if>
+        <if test="page !=null and page.db == 'mysql'">
+            limit #{page.from}, #{page.count}
+        </if>
+        <!-- oracle开始 -->
+        <if test="page !=null and page.db == 'oracle'">
+            )v1
+            where rownum &lt; = #{page.end}
+            )v2
+            where rn &gt; = #{page.start}
+        </if>
+        <!-- oracle结束 -->
+    </select>
+
+    <select id="findRelation" parameterType="map" resultMap="mainMap">
+        <if test="page != null and page.db == 'oracle'">
+            select
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+            select rownum rn,
+            <include refid="mainTable_allColumn_aliasPrefix"/>
+            from (
+        </if>
+        select
+        <include refid="mainTable_allColumn_aliasPrefix"/>
+        <include refid="all_column_user_role"/><!-- 关联表（用户角色关联表）字段名 -->
+        from
+        <include refid="mainTable_withAlias"/>
+        left join
+        <include refid="table_role_role"/><!-- 关联表（用户角色关联表） -->
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+        <if test="page != null and page.order != null">order by ${page.order}</if>
+        <if test="page !=null and page.db == 'mysql'">
+            <include refid="query_param_user_role"/><!-- 关联表（用户角色关联表）查询条件 -->
+            limit #{page.from},#{page.count}
+        </if>
+        <if test="page !=null and page.db == 'oracle'">
+            )v1
+            where rownum &lt; = #{page.end}
+            )v2
+            where rn &gt; = #{page.start}
+        </if>
+    </select>
+
+    <!-- count -->
+    <select id="count" parameterType="map" resultType="int">
+        select
+        count(1)
+        from
+        <include refid="mainTable_withAlias"/>
+        <where>
+            <include refid="mainTable_queryParam"/>
+        </where>
+    </select>
+
+    <select id="countAll" resultType="int">
+        select
+        count(1)
+        from
+        <include refid="mainTable_withAlias"/>
+    </select>
+</mapper>

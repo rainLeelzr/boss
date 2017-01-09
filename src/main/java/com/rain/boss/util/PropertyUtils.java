@@ -1,5 +1,7 @@
 package com.rain.boss.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,15 +23,17 @@ public class PropertyUtils extends org.apache.commons.beanutils.PropertyUtils {
     }
 
     /**
-     * 增加describe方法的功能，去掉value为null的key
+     * 增加describe方法的功能，去掉value为null或者为空字符串的key
      *
      * @param bean 需要转换为map的对象
      */
-    public static Map<String, Object> describeWithoutNull(final Object bean) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static Map<String, Object> describeWithoutBlank(final Object bean) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Map<String, Object> temp = describe(bean);
         Iterator<Map.Entry<String, Object>> it = temp.entrySet().iterator();
         it.forEachRemaining(entry -> {
             if (null == entry.getValue()) {
+                it.remove();
+            } else if (entry.getValue() instanceof String && StringUtils.isBlank((String) entry.getValue())) {
                 it.remove();
             }
         });

@@ -3,12 +3,12 @@ package com.rain.boss.perm.dto;
 import com.rain.boss.perm.entity.User;
 import com.rain.boss.perm.entity.UserToken;
 
-public class UserDto {
+public class LoginUser {
     //user
     private String userId;
     private String userAccount;
     private String userName;
-    private String gender;
+    private int gender;
     private String qq;
     private String telephone;
     private String mobilePhone;
@@ -17,21 +17,21 @@ public class UserDto {
     //userToken
     private String token;
 
-    public UserDto() {
+    public LoginUser() {
 
     }
 
-    public UserDto(User user, UserToken userToken) {
+    public LoginUser(User user, String token) {
         this.userId = user.getId();
         this.userAccount = user.getUserAccount();
         this.userName = user.getUserName();
-        this.gender = user.getGenderStr();
+        this.gender = user.getGender();
         this.qq = user.getQq();
         this.telephone = user.getTelephone();
         this.mobilePhone = user.getMobilePhone();
         this.email = user.getEmail();
 
-        this.token = userToken.getToken();
+        this.token = token;
     }
 
     public String getUserId() {
@@ -58,11 +58,11 @@ public class UserDto {
         this.userName = userName;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

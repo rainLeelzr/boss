@@ -151,12 +151,12 @@
         where id=#{id}
     </select>
 
-    <select id="getByAccountAndPwd" parameterType="string" resultType="User">
+    <select id="getByAccount" parameterType="string" resultType="User">
         select
         <include refid="mainTable_allColumn_aliasPrefix"/>
         from
         <include refid="mainTable_withAlias"/>
-        where userAccount = #{arg0} and userPwd = #{arg1}
+        where userAccount = #{arg0}
     </select>
 
     <select id="findPage" parameterType="map" resultType="User">

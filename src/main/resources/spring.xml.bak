@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
     <!-- 使用JNDI数据源 -->
     <!--   <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="default" autowire="default"> <property name="jndiName">
           <value>java:comp/env/jndi/egvm</value> </property> <property name="resourceRef"> <value>false</value> </property> </bean> -->
@@ -29,7 +32,7 @@
         <!-- 创建容器时，Spring会根据此项配置 自动加载MyBatis的映射文件。 -->
         <property name="mapperLocations" value="classpath*:com/rain/**/*Mapper.xml"/>
         <!-- 自动扫描需要定义类别名的包，将包内的JAVA类的类名作为类别名 -->
-        <property name="typeAliasesPackage" value="com.rain.boss.perm.entity"/>
+        <property name="typeAliasesPackage" value="com.rain.boss.perm.entity,com.rain.boss.base.entity"/>
     </bean>
 
     <!-- 配置ECM平台Mapper -->
@@ -87,31 +90,31 @@
     </bean>
 
     <!--<mvc:interceptors>-->
-        <!--&lt;!&ndash;登录检查拦截器&ndash;&gt;-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--&lt;!&ndash;页面&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/toLogin.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/toRegister.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/nopower.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/toError.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;功能&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/checkLogin.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/validateCode.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/isExist.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/register.do"/>&ndash;&gt;-->
-            <!--&lt;!&ndash; 静态资源 &ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/index.html"/>-->
-            <!--<mvc:exclude-mapping path="/css/**"/>-->
-            <!--<mvc:exclude-mapping path="/js/**"/>-->
-            <!--<mvc:exclude-mapping path="/image/**"/>-->
-            <!--<mvc:exclude-mapping path="/frame/**"/>-->
-            <!--&lt;!&ndash; 功能&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/boss/login"/>-->
-            <!--<mvc:exclude-mapping path="/boss/main"/>-->
-            <!--<mvc:exclude-mapping path="/boss/perm/users"/>-->
-            <!--<bean class="com.rain.boss.interceptor.CheckUserLoginInterceptor"/>-->
-        <!--</mvc:interceptor>-->
+    <!--&lt;!&ndash;登录检查拦截器&ndash;&gt;-->
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/**"/>-->
+    <!--&lt;!&ndash;页面&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/toLogin.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/toRegister.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/nopower.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/toError.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;功能&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/checkLogin.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/validateCode.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/isExist.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/login/register.do"/>&ndash;&gt;-->
+    <!--&lt;!&ndash; 静态资源 &ndash;&gt;-->
+    <!--<mvc:exclude-mapping path="/index.html"/>-->
+    <!--<mvc:exclude-mapping path="/css/**"/>-->
+    <!--<mvc:exclude-mapping path="/js/**"/>-->
+    <!--<mvc:exclude-mapping path="/image/**"/>-->
+    <!--<mvc:exclude-mapping path="/frame/**"/>-->
+    <!--&lt;!&ndash; 功能&ndash;&gt;-->
+    <!--<mvc:exclude-mapping path="/boss/login"/>-->
+    <!--<mvc:exclude-mapping path="/boss/main"/>-->
+    <!--<mvc:exclude-mapping path="/boss/perm/users"/>-->
+    <!--<bean class="com.rain.boss.interceptor.CheckUserLoginInterceptor"/>-->
+    <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
 
     <!-- 处理异常 -->
@@ -147,4 +150,13 @@
     <aop:config proxy-target-class="true">
         <aop:advisor advice-ref="txAdvice" pointcut="within(com.rain..service..*)"/>
     </aop:config>
+
+    <bean id="jCacheManagerFactory" class="org.springframework.cache.jcache.JCacheManagerFactoryBean">
+        <property name="cacheManagerUri" value="#{getClass().getResource('/ehcache.xml').toURI()}"/>
+    </bean>
+
+    <bean id="cacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
+        <property name="cacheManager" ref="jCacheManagerFactory"/>
+    </bean>
+
 </beans>

@@ -19,33 +19,33 @@ public class UserTokenService extends BaseService<UserToken, UserTokenMapper> {
      * @param user 用户
      * @return UserToken 用户令牌
      */
-    public UserToken create(User user) {
-        String token = UUID.randomUUID().toString();
+//    public UserToken create(User user) {
+//        String token = UUID.randomUUID().toString();
+//
+//        UserToken userToken = mapper.getByUserId(user.getId());
+//        if (userToken != null) {
+//            userToken.setToken(token);
+//            userToken.setTokenCreateTime(DateTimeUtils.getCurrentDateTime());
+//            userToken.setTokenExpireTime(DateTimeUtils.getNextMilliseconds(30, Calendar.MINUTE));
+//
+//            userToken.setUserId(null);
+//            mapper.update(userToken);
+//        } else {
+//            userToken = new UserToken();
+//            userToken.genId();
+//            userToken.setUserId(user.getId());
+//            userToken.setToken(token);
+//            userToken.setTokenCreateTime(DateTimeUtils.getCurrentDateTime());
+//            userToken.setTokenExpireTime(DateTimeUtils.getNextMilliseconds(30, Calendar.MINUTE));
+//
+//            mapper.add(userToken);
+//        }
+//
+//        //查找
+//        return userToken;
+//    }
 
-        UserToken userToken = mapper.getByUserId(user.getId());
-        if (userToken != null) {
-            userToken.setToken(token);
-            userToken.setTokenCreateTime(DateTimeUtils.getCurrentDateTime());
-            userToken.setTokenExpireTime(DateTimeUtils.getNextMilliseconds(30, Calendar.MINUTE));
-
-            userToken.setUserId(null);
-            mapper.update(userToken);
-        } else {
-            userToken = new UserToken();
-            userToken.genId();
-            userToken.setUserId(user.getId());
-            userToken.setToken(token);
-            userToken.setTokenCreateTime(DateTimeUtils.getCurrentDateTime());
-            userToken.setTokenExpireTime(DateTimeUtils.getNextMilliseconds(30, Calendar.MINUTE));
-
-            mapper.add(userToken);
-        }
-
-        //查找
-        return userToken;
-    }
-
-    public UserToken getByToken(String token) {
-        return mapper.getByToken(token);
-    }
+//    public UserToken getByToken(String token) {
+//        return mapper.getByToken(token);
+//    }
 }

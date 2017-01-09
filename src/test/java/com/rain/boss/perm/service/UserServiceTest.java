@@ -30,12 +30,11 @@ public class UserServiceTest extends AbstractTestClass<User, UserMapper, UserSer
     }
 
     @Test
-    public void testGetByAccountAndPwd() {
+    public void testGetByAccount() {
         User entity = genEntity();
         Assert.assertEquals(1, service.add(entity));
 
-        Assert.assertEquals(entity.toString(), service.getByAccountAndPwd(entity.getUserAccount(), entity.getUserPwd
-                ()).toString());
+        Assert.assertEquals(entity.toString(), service.getByAccount(entity.getUserAccount()).toString());
     }
 
 }

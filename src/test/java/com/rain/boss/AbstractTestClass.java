@@ -6,7 +6,7 @@ import com.rain.boss.baseClass.service.BaseService;
 import com.rain.boss.data.page.Page;
 import com.rain.boss.data.page.PaginationData;
 import com.rain.boss.util.PropertyUtils;
-import com.rain.boss.util.SysConst;
+import com.rain.boss.init.SysParam;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +46,7 @@ public abstract class AbstractTestClass<E extends BaseEntity, M extends BaseMapp
     public void testFindPage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         E entity = genEntity();
         Assert.assertEquals(1, service.add(entity));
-        Map<String, Object> params = PropertyUtils.describeWithoutNull(entity);
+        Map<String, Object> params = PropertyUtils.describeWithoutBlank(entity);
 
         Page page = new Page();
         page.setPageIndex(0);
@@ -54,7 +54,7 @@ public abstract class AbstractTestClass<E extends BaseEntity, M extends BaseMapp
         page.setSortField("id");
         page.setSortOrder("desc");
         page.calculate();
-        params.put(SysConst.PAGE_KEY, page);
+        params.put(SysParam.PAGE_KEY, page);
         PaginationData paginationData = service.findPage(params);
 
         Assert.assertEquals(1, paginationData.getCount());
@@ -65,7 +65,7 @@ public abstract class AbstractTestClass<E extends BaseEntity, M extends BaseMapp
     public void testCount() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         E entity = genEntity();
         Assert.assertEquals(1, service.add(entity));
-        Map<String, Object> params = PropertyUtils.describeWithoutNull(entity);
+        Map<String, Object> params = PropertyUtils.describeWithoutBlank(entity);
 
         Assert.assertEquals(1, service.count(params));
     }

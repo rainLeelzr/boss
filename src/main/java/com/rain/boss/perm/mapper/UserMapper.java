@@ -7,6 +7,6 @@ import com.rain.boss.perm.entity.User;
 @MyBatisMapper
 public interface UserMapper extends BaseMapper<User> {
 
-    User getByAccountAndPwd(String userAccount, String userPwd);
+    User getByAccount(String userAccount);
 
 }

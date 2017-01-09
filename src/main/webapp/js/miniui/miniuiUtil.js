@@ -1,34 +1,20 @@
-(function (win) {
+(function(win) {
 
-    //访问boss系统的token
-    win.appSetting = {
-        bossToken: '4e90c7cc-41bd-45ce-9b61-e453713e14fb'
-    };
+  var parseOption = function(e) {
 
-    // $(document).ajaxComplete(function (evt, request, settings) {
-    //     var text = request.responseText;
-    //     console.log('ajaxComplete');
-    // });
+    var optName = e.column.name;
+    var opts = common.getOptions(optName);
+    for (var i = opts.length - 1; i >= 0; i--) {
+      if (opts[i].value === e.value) {
+        return opts[i].name;
+      }
+    }
+    return '';
+  }
 
-    //每隔25分钟进行一次心跳
-    win.heartbeat = function () {
-        setTimeout(function () {
-            $.ajax({
-                url: "/boss/heartbeat",
-                type: 'get',
-                data: {token: appSetting.bossToken},
-                cache: false,
-                success: function (text) {
-
-                },
-                error: function (text) {
-
-                }
-            });
-        }, 1000 * 60 * 25);
-    };
-
-    win.mtool = {};
+  win.mutil = {
+    parseOption: parseOption
+  };
 
 
 })(window);

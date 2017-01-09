@@ -1,12 +1,16 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Administrator">
     <words>
+      <w>addr</w>
       <w>checkcolumn</w>
+      <w>crypto</w>
       <w>datagrid</w>
       <w>elems</w>
       <w>entitys</w>
       <w>iframe</w>
       <w>indexcolumn</w>
+      <w>loginorg</w>
+      <w>loginuser</w>
       <w>miniui</w>
       <w>mtool</w>
       <w>ondestroy</w>

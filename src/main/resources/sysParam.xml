@@ -1,0 +1,8 @@
+<params>
+    <token>
+        <secretKey>opJZdTmIpHYciKbCCkwp1A==</secretKey>
+
+        <!-- 超时时间，单位：分钟。等于0时，永不超时-->
+        <expireTime>30</expireTime>
+    </token>
+</params>

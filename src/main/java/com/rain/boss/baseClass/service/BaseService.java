@@ -41,7 +41,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
     }
 
     public E get(String id) {
-        if (StringUtils.isEmpty(id)) {
+        if (StringUtils.isBlank(id)) {
             return null;
         }
         return mapper.get(id);
@@ -65,4 +65,5 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
     public int count(Map<String, ?> params) {
         return mapper.count(params);
     }
+
 }

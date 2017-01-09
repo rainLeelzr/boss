@@ -4,8 +4,6 @@ import com.rain.boss.baseClass.entity.BaseEntity;
 
 public class User extends BaseEntity {
 
-    public static final byte GENDER_MAN = 1;
-    public static final byte GENDER_WOMAN = 2;
     private static final long serialVersionUID = 1L;
 
     /**
@@ -47,20 +45,6 @@ public class User extends BaseEntity {
      * 备注:
      */
     private String remark;
-
-    public String getGenderStr() {
-        if (gender == null) {
-            return "";
-        }
-        switch (gender) {
-            case GENDER_MAN:
-                return "男";
-            case GENDER_WOMAN:
-                return "女";
-            default:
-                return "";
-        }
-    }
 
     public String getUserAccount() {
         return userAccount;
